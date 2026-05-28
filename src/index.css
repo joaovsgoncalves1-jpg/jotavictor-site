@@ -1,0 +1,12 @@
+:root {
+  color: #efe7d6;
+  background: #0b0b0a;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  min-height: 100svh;
+}
