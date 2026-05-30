@@ -12,29 +12,33 @@ import {
 } from 'lucide-react'
 import './App.css'
 
+// Image filenames are legacy; map by the visible photo theme, not by filename.
 const fronts = [
   {
-    eyebrow: 'Farmácias & representação',
-    title: 'A operação real que me mantém perto do mercado.',
+    eyebrow: 'Rua / farma',
+    title: 'Rotina comercial no varejo farmacêutico.',
     body:
-      'Rotina comercial, relacionamento com farmácias, rua, negociação e leitura prática de demanda. É daqui que nascem problemas reais para resolver.',
-    image: '/images/joao-car.jpg',
+      'Relacionamento com farmácias, negociação, leitura de demanda e execução no campo. É daqui que saem problemas reais para resolver com produto e processo.',
+    facts: ['vendas', 'farmácias', 'operação real'],
+    image: '/images/joao-work.jpg',
     icon: Store,
   },
   {
     eyebrow: 'EncarteZap',
-    title: 'Produto para vender melhor no varejo farmacêutico.',
+    title: 'Ferramenta para comunicar oferta com menos atrito.',
     body:
-      'Uma frente digital ligada ao que eu vivo no campo: comunicação simples, ofertas claras e ferramenta útil para farmácias chegarem melhor no cliente.',
-    image: '/images/joao-work.jpg',
+      'Uma frente digital ligada ao que vejo no campo: encartes simples, campanhas claras e caminho mais curto entre farmácia, oferta e cliente.',
+    facts: ['produto', 'WhatsApp', 'campanhas'],
+    image: '/images/joao-gym.jpg',
     icon: MessageCircle,
   },
   {
     eyebrow: 'Jotav.fit',
-    title: 'Conteúdo, treino e empreendedorismo no fitness.',
+    title: 'Treino como laboratório de disciplina.',
     body:
-      'Minha marca de construção física e mental: treino, rotina, disciplina e conteúdo para transformar execução em identidade.',
-    image: '/images/joao-gym.jpg',
+      'Conteúdo e rotina física sem personagem pronto: treino, consistência e construção pública de uma base mais forte para executar melhor.',
+    facts: ['treino', 'conteúdo', 'consistência'],
+    image: '/images/joao-car.jpg',
     icon: Dumbbell,
   },
 ]
@@ -42,18 +46,18 @@ const fronts = [
 const systems = [
   {
     icon: BrainCircuit,
-    title: 'IA aplicada',
-    body: 'Não como promessa distante. Como rotina: organizar, decidir, criar, vender e executar melhor.',
+    title: 'IA para tirar peso operacional',
+    body: 'Organizar informação, transformar áudio em tarefa, resumir conversas, apoiar decisão e reduzir trabalho repetido.',
   },
   {
     icon: Flame,
     title: 'Forja',
-    body: 'Meu sistema pessoal para transformar metas soltas em hábitos, tarefas, pontuação e direção diária.',
+    body: 'Um cockpit pessoal para hábitos, tarefas, pontuação e direção diária — menos promessa, mais placar visível.',
   },
   {
     icon: Route,
-    title: 'Rotina em resultado',
-    body: 'O fio que liga tudo: sair do excesso de ideia e construir processos que realmente movem o dia.',
+    title: 'Processo antes de inspiração',
+    body: 'A lógica por trás das frentes: capturar, priorizar, executar, medir e melhorar sem depender de motivação perfeita.',
   },
 ]
 
@@ -62,6 +66,21 @@ const principles = [
   'IA precisa virar processo, não distração.',
   'Disciplina é mais útil quando vira sistema.',
   'Conteúdo bom nasce de vida vivida, não de personagem.',
+]
+
+const proofPoints = [
+  {
+    label: 'Rua',
+    text: 'operação comercial e leitura prática do varejo farmacêutico.',
+  },
+  {
+    label: 'Código',
+    text: 'IA, automações e produtos simples para reduzir trabalho repetido.',
+  },
+  {
+    label: 'Treino',
+    text: 'disciplina física como base para consistência e clareza diária.',
+  },
 ]
 
 function App() {
@@ -78,7 +97,7 @@ function App() {
         </a>
         <div className="nav-links">
           <a href="#frentes">Frentes</a>
-          <a href="#ia">IA real</a>
+          <a href="#ia">Processos</a>
           <a href="#manifesto">Manifesto</a>
           <a href="#contato">Contato</a>
         </div>
@@ -94,18 +113,18 @@ function App() {
           >
             <p className="kicker">jotavictor.com</p>
             <h1>
-              João Victor constrói sistemas para transformar rotina em resultado.
+              Operação comercial, código e disciplina na prática.
             </h1>
             <p className="hero-sub">
-              Representante comercial, criador digital e construtor de sistemas — unindo
-              mercado farmacêutico, fitness e IA aplicada à vida real.
+              Atuo no varejo farmacêutico, crio sistemas com IA e documento a rotina que
+              sustenta tudo — vendas, produto, treino e execução diária.
             </p>
             <div className="hero-actions">
-              <a className="button primary" href="#frentes">
-                Ver minhas frentes <ArrowUpRight size={18} />
+              <a className="button primary" href="mailto:contato@jotavictor.com">
+                Falar comigo <ArrowUpRight size={18} />
               </a>
-              <a className="button ghost" href="#manifesto">
-                Ler manifesto
+              <a className="button ghost" href="#frentes">
+                Ver projetos
               </a>
             </div>
           </motion.div>
@@ -128,20 +147,24 @@ function App() {
       </section>
 
       <section className="intro-panel">
-        <p>
-          Uma marca pessoal não para parecer maior do que é. Para organizar, em um só
-          lugar, as frentes que já existem: a rua, o produto, o treino, a IA e a
-          construção diária.
-        </p>
+        <p>Um hub simples para mostrar o que já está em movimento.</p>
+        <div className="proof-grid" aria-label="Como as frentes se conectam">
+          {proofPoints.map((point) => (
+            <div className="proof-item" key={point.label}>
+              <span>{point.label}</span>
+              <p>{point.text}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="section" id="frentes">
         <div className="section-heading">
           <p className="kicker">O que eu construo</p>
-          <h2>Três frentes, uma lógica.</h2>
+          <h2>O que está em campo agora.</h2>
           <p>
-            Cada projeto nasce de uma parte da minha vida. O ponto em comum é transformar
-            rotina em sistema — e sistema em resultado prático.
+            Não é uma lista de cargos. São frentes que se alimentam: a rua mostra o
+            problema, o código organiza a solução e o treino mantém a consistência.
           </p>
         </div>
 
@@ -154,13 +177,18 @@ function App() {
                 key={front.title}
               >
                 <div className="front-image">
-                  <img src={front.image} alt="" />
+                  <img src={front.image} alt="" width="720" height="1280" />
                 </div>
                 <div className="front-content">
                   <span className="icon-pill"><Icon size={18} /></span>
                   <p className="eyebrow">{front.eyebrow}</p>
                   <h3>{front.title}</h3>
                   <p>{front.body}</p>
+                  <div className="front-facts" aria-label={`Pontos-chave de ${front.eyebrow}`}>
+                    {front.facts.map((fact) => (
+                      <span key={fact}>{fact}</span>
+                    ))}
+                  </div>
                 </div>
               </article>
             )
@@ -170,12 +198,11 @@ function App() {
 
       <section className="split-section" id="ia">
         <div className="sticky-copy">
-          <p className="kicker">IA aplicada à vida real</p>
-          <h2>Menos hype. Mais execução.</h2>
+          <p className="kicker">Processos e IA</p>
+          <h2>Menos ferramenta nova. Mais rotina funcionando.</h2>
           <p>
-            O objetivo não é falar de IA como tendência. É mostrar como ela entra na rotina:
-            no planejamento, na operação comercial, no conteúdo, nos estudos, nos produtos e
-            na disciplina pessoal.
+            A IA entra onde existe repetição, ruído ou decisão acumulada: organizar o dia,
+            transformar informação solta em próxima ação e deixar a operação mais leve.
           </p>
         </div>
         <div className="system-stack">
@@ -215,10 +242,10 @@ function App() {
       <section className="final-cta" id="contato">
         <div>
           <Sparkles className="spark" size={28} />
-          <h2>João Victor é a marca-mãe.</h2>
+          <h2>Rua, código e treino no mesmo lugar.</h2>
           <p>
             EncarteZap, Jotav.fit, Forja e representação comercial são frentes diferentes
-            da mesma construção: usar rotina, IA e execução para criar negócios reais.
+            da mesma construção: resolver problemas reais com processo, tecnologia e rotina.
           </p>
         </div>
         <div className="cta-actions">
