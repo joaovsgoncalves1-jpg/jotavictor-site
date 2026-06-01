@@ -460,23 +460,82 @@ h3 {
   margin-bottom: 14px;
 }
 
-.front-facts {
+.front-meta {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 18px;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(239, 231, 214, 0.14);
 }
 
-.front-facts span {
-  padding: 7px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(239, 231, 214, 0.16);
-  background: rgba(8, 8, 7, 0.42);
-  color: rgba(239, 231, 214, 0.76);
-  font-size: 0.72rem;
+.front-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(239, 231, 214, 0.74);
+  font-size: 0.74rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.front-status::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px rgba(201, 159, 92, 0.18);
+}
+
+.front-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--paper);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.front-link svg {
+  color: var(--gold);
+  transition: transform 200ms ease;
+}
+
+/* Stretched link: the whole linked card is clickable. */
+.front-card.is-linked {
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.front-card.is-linked:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201, 159, 92, 0.45);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.4);
+}
+
+.front-card.is-linked:hover .front-link svg {
+  transform: translate(2px, -2px);
+}
+
+.front-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.front-card:focus-within {
+  border-color: var(--gold);
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.front-link:focus-visible {
+  outline: none;
 }
 
 .split-section {
@@ -591,6 +650,29 @@ footer {
   border-top: 1px solid var(--line);
   color: var(--paper-muted);
   font-size: 0.88rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: var(--paper-muted);
+  font-weight: 600;
+  transition: color 180ms ease;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: var(--paper);
+  outline: none;
+}
+
+.footer-links a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 @media (max-width: 960px) {
