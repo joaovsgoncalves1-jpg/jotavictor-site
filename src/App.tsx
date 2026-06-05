@@ -36,7 +36,7 @@ const fronts = [
     status: 'No ar',
     title: 'Oferta de farmácia direto no WhatsApp.',
     body:
-      'O EncarteZap nasceu de uma dor simples: campanha cara, mensagem perdida e cliente que não vê a oferta. Transformei isso em uma vitrine digital prática para farmácias venderem melhor no WhatsApp.',
+      'O EncarteZap nasceu de uma dor simples: campanha cara, mensagem perdida e cliente que não vê a oferta. Transformei isso em uma vitrine digital prática para farmácias venderem melhor no WhatsApp. Está no ar e funcionando.',
     image: '/images/joao-gym.jpg',
     alt: 'João Victor a caminho de uma visita comercial',
     icon: MessageCircle,
