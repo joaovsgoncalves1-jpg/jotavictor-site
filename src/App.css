@@ -701,9 +701,7 @@ footer {
     width: calc(100vw - 22px);
   }
 
-  .nav-links a:nth-child(3) {
-    display: none;
-  }
+  /* no more hiding links on tablet; 4 links fit with smaller font at 560px */
 
   .hero-section {
     padding-top: 106px;
