@@ -36,6 +36,17 @@ Vercel ou Netlify.
 
 Depois de publicar, apontar `jotavictor.com` no DNS para o provedor escolhido.
 
+## Para agentes de IA e colaboradores
+
+Veja `AGENTS.md` (no raiz do repositório) com:
+- Identidade do projeto e tom obrigatório
+- Regras de trabalho, verificação (lint + build)
+- Estrutura de arquivos
+- O que pode e não pode mudar sem pedido explícito
+- Fluxo recomendado para qualquer agente (Hermes, Copilot, Cursor, etc.)
+
+Este é o setup "GitHub AI" do site: instruções canônicas para qualquer agente de código trabalhar aqui de forma alinhada.
+
 ## Pendências antes de ir ao ar
 
 - Trocar o e-mail `contato@jotavictor.com` se João preferir outro canal.
