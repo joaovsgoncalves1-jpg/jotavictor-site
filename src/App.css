@@ -32,6 +32,7 @@
 
 html {
   scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
   background: var(--ink);
 }
 
@@ -222,6 +223,10 @@ h3 {
 .button:hover,
 .button:focus-visible {
   transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(0);
 }
 
 .button:hover {
@@ -696,7 +701,6 @@ footer {
     width: calc(100vw - 22px);
   }
 
-  .nav-links a:nth-child(2),
   .nav-links a:nth-child(3) {
     display: none;
   }
@@ -775,6 +779,24 @@ footer {
 }
 
 @media (max-width: 560px) {
+  .nav {
+    height: 54px;
+    padding: 7px 8px 7px 12px;
+  }
+
+  .brand {
+    width: 36px;
+    height: 36px;
+  }
+
+  .nav-links {
+    font-size: 0.78rem;
+  }
+
+  .nav-links a {
+    padding: 9px 10px;
+  }
+
   .hero-section {
     padding-inline: 18px;
   }
