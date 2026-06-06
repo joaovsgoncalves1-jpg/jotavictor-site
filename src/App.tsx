@@ -97,8 +97,6 @@ function StaggerItem({
   )
 }
 
-// These symbols are used by later tasks; referenced here to satisfy noUnusedLocals.
-void [Reveal, Stagger, StaggerItem]
 
 const CATALOGO_URL = 'https://catalogo-digital-opella.vercel.app/'
 const ENCARTEZAP_URL = 'https://www.encartezap.com.br'
@@ -311,29 +309,37 @@ function App() {
       </section>
 
       <section className="intro-panel" id="sobre">
-        <div className="intro-copy">
-          <p className="kicker">Sobre mim</p>
-          <p className="intro-lead">
-            Sou João Victor, mas muita gente me conhece como Jota.
-          </p>
-          <p className="intro-body">
-            Hoje moro em Natal-RN e vivo uma fase de construção em várias áreas ao mesmo
-            tempo. Trabalho no setor farmacêutico, estou ajustando meus caminhos de estudo e
-            carreira, treino com foco em calistenia e venho criando projetos digitais que
-            nascem dos problemas que vejo no dia a dia.
-          </p>
-          <p className="intro-body">
-            Não me vejo só como “o cara do treino”, “o cara da farmácia” ou “o cara da IA”.
-            Na prática, tudo isso se mistura. O trabalho de campo me mostra problemas reais.
-            A tecnologia me ajuda a transformar esses problemas em processo. O treino me dá
-            disciplina para continuar quando a empolgação passa.
-          </p>
-          <p className="intro-body">Este site existe para organizar isso de um jeito simples.</p>
-        </div>
+        <Stagger className="intro-copy">
+          <StaggerItem><p className="kicker">Sobre mim</p></StaggerItem>
+          <StaggerItem>
+            <p className="intro-lead">
+              Sou João Victor, mas muita gente me conhece como Jota.
+            </p>
+          </StaggerItem>
+          <StaggerItem>
+            <p className="intro-body">
+              Hoje moro em Natal-RN e vivo uma fase de construção em várias áreas ao mesmo
+              tempo. Trabalho no setor farmacêutico, estou ajustando meus caminhos de estudo e
+              carreira, treino com foco em calistenia e venho criando projetos digitais que
+              nascem dos problemas que vejo no dia a dia.
+            </p>
+          </StaggerItem>
+          <StaggerItem>
+            <p className="intro-body">
+              Não me vejo só como "o cara do treino", "o cara da farmácia" ou "o cara da IA".
+              Na prática, tudo isso se mistura. O trabalho de campo me mostra problemas reais.
+              A tecnologia me ajuda a transformar esses problemas em processo. O treino me dá
+              disciplina para continuar quando a empolgação passa.
+            </p>
+          </StaggerItem>
+          <StaggerItem>
+            <p className="intro-body">Este site existe para organizar isso de um jeito simples.</p>
+          </StaggerItem>
+        </Stagger>
       </section>
 
       <section className="section" id="frentes">
-        <div className="section-heading">
+        <Reveal className="section-heading">
           <p className="kicker">Frentes</p>
           <h2>Onde minha vida acontece hoje.</h2>
           <p>
@@ -341,13 +347,14 @@ function App() {
             o campo mostra o problema, a tecnologia vira processo e o treino sustenta a
             disciplina.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="fronts-grid">
+        <Stagger className="fronts-grid">
           {fronts.map((front) => {
             const Icon = front.icon
             return (
-              <article
+              <StaggerItem
+                as="article"
                 className={`front-card${front.image ? '' : ' is-featured'}`}
                 key={front.eyebrow}
               >
@@ -369,27 +376,28 @@ function App() {
                   <h3>{front.title}</h3>
                   <p>{front.body}</p>
                 </div>
-              </article>
+              </StaggerItem>
             )
           })}
-        </div>
+        </Stagger>
       </section>
 
       <section className="section" id="projetos">
-        <div className="section-heading">
+        <Reveal className="section-heading">
           <p className="kicker">Projetos</p>
           <h2>O que eu já coloquei de pé.</h2>
           <p>
             Algumas coisas já estão rodando, outras ainda estão tomando forma. Todas seguem
             a mesma lógica: pegar um problema real e transformar em algo útil.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="projects-grid">
+        <Stagger className="projects-grid">
           {projects.map((project) => {
             const Icon = project.icon
             return (
-              <article
+              <StaggerItem
+                as="article"
                 className={`project-card${project.link ? ' is-linked' : ''}`}
                 key={project.eyebrow}
               >
@@ -412,14 +420,14 @@ function App() {
                     </a>
                   )}
                 </div>
-              </article>
+              </StaggerItem>
             )
           })}
-        </div>
+        </Stagger>
       </section>
 
       <section className="split-section" id="ia">
-        <div className="sticky-copy">
+        <Reveal className="sticky-copy">
           <p className="kicker">IA aplicada à rotina</p>
           <h2>Menos ferramenta nova. Mais processo que funciona.</h2>
           <p>
@@ -427,40 +435,42 @@ function App() {
             repetitivas. Não me interessa IA como moda. Me interessa quando ela tira peso da
             rotina, reduz repetição e ajuda a executar melhor.
           </p>
-        </div>
-        <div className="system-stack">
+        </Reveal>
+        <Stagger className="system-stack">
           {systems.map((item) => {
             const Icon = item.icon
             return (
-              <div className="system-card" key={item.title}>
+              <StaggerItem className="system-card" key={item.title}>
                 <Icon size={22} aria-hidden="true" />
                 <div>
                   <h3>{item.title}</h3>
                   <p>{item.body}</p>
                 </div>
-              </div>
+              </StaggerItem>
             )
           })}
-        </div>
+        </Stagger>
       </section>
 
       <section className="manifesto" id="principios">
         <div className="manifesto-inner">
-          <p className="kicker">Princípios</p>
-          <h2>Não quero parecer ocupado. Quero construir.</h2>
-          <div className="manifesto-grid">
+          <Reveal>
+            <p className="kicker">Princípios</p>
+            <h2>Não quero parecer ocupado. Quero construir.</h2>
+          </Reveal>
+          <Stagger className="manifesto-grid">
             {principles.map((principle) => (
-              <div className="principle" key={principle}>
+              <StaggerItem className="principle" key={principle}>
                 <ShieldCheck size={18} aria-hidden="true" />
                 <span>{principle}</span>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </div>
       </section>
 
       <section className="final-cta" id="contato">
-        <div>
+        <Reveal>
           <Sparkles className="spark" size={28} aria-hidden="true" />
           <h2>Um resumo público do que estou construindo.</h2>
           <p>
@@ -469,8 +479,8 @@ function App() {
             e colocar algo útil no mundo. Se quiser trocar ideia, conhecer algum projeto ou
             falar comigo, me chama no Instagram ou pelo e-mail.
           </p>
-        </div>
-        <div className="cta-actions">
+        </Reveal>
+        <Reveal className="cta-actions">
           <a className="button primary" href={`mailto:${EMAIL}`}>
             Falar comigo <ArrowUpRight size={18} aria-hidden="true" />
           </a>
@@ -480,7 +490,7 @@ function App() {
           <a className="button ghost" href={ENCARTEZAP_URL} target="_blank" rel="noopener noreferrer">
             Conhecer o EncarteZap <ArrowUpRight size={16} aria-hidden="true" />
           </a>
-        </div>
+        </Reveal>
       </section>
 
       <footer>
