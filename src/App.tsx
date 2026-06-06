@@ -98,7 +98,7 @@ function StaggerItem({
 }
 
 // These symbols are used by later tasks; referenced here to satisfy noUnusedLocals.
-void [heroParent, wordParent, Reveal, Stagger, StaggerItem]
+void [Reveal, Stagger, StaggerItem]
 
 const CATALOGO_URL = 'https://catalogo-digital-opella.vercel.app/'
 const ENCARTEZAP_URL = 'https://www.encartezap.com.br'
@@ -248,26 +248,28 @@ function App() {
         <div className="hero-grid">
           <motion.div
             className="hero-copy"
-            initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            variants={reduceMotion ? undefined : heroParent}
+            initial={reduceMotion ? false : 'hidden'}
+            animate={reduceMotion ? undefined : 'show'}
           >
-            <p className="kicker">jotavictor.com</p>
-            <h1>
-              <span>Vida real,</span>
-              <span>trabalho real,</span>
-              <span>projetos reais.</span>
-            </h1>
-            <p className="hero-sub">
+            <motion.p className="kicker" variants={reduceMotion ? undefined : fadeRise}>
+              jotavictor.com
+            </motion.p>
+            <motion.h1 variants={reduceMotion ? undefined : wordParent}>
+              <motion.span variants={reduceMotion ? undefined : fadeRise}>Vida real,</motion.span>
+              <motion.span variants={reduceMotion ? undefined : fadeRise}>trabalho real,</motion.span>
+              <motion.span variants={reduceMotion ? undefined : fadeRise}>projetos reais.</motion.span>
+            </motion.h1>
+            <motion.p className="hero-sub" variants={reduceMotion ? undefined : fadeRise}>
               Trabalho no varejo farmacêutico, treino calistenia e construo ferramentas
               digitais a partir dos problemas que encontro na prática.
-            </p>
-            <p className="hero-note">
+            </motion.p>
+            <motion.p className="hero-note" variants={reduceMotion ? undefined : fadeRise}>
               Este site é meu ponto público na internet. Aqui eu organizo o que estou
               vivendo e construindo: trabalho, projetos, treino, conteúdo e algumas ideias
               que ainda estão tomando forma.
-            </p>
-            <div className="hero-actions">
+            </motion.p>
+            <motion.div className="hero-actions" variants={reduceMotion ? undefined : fadeRise}>
               <a className="button primary" href="#projetos">
                 Ver projetos <ArrowUpRight size={18} aria-hidden="true" />
               </a>
@@ -282,7 +284,7 @@ function App() {
               >
                 Ver Jotav.fit
               </a>
-            </div>
+            </motion.div>
           </motion.div>
 
           <motion.div className="portrait-stage" style={{ y: heroY }}>
