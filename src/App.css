@@ -71,6 +71,31 @@ img {
   z-index: 0;
 }
 
+.site-shell::after {
+  content: '';
+  position: fixed;
+  inset: -20%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(40% 50% at 28% 30%, rgba(201, 159, 92, 0.10), transparent 60%),
+    radial-gradient(45% 55% at 75% 65%, rgba(93, 31, 39, 0.20), transparent 60%);
+  filter: blur(8px);
+  animation: bg-breathe 18s ease-in-out infinite;
+}
+
+@keyframes bg-breathe {
+  0%,
+  100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.15) translate(2%, -2%);
+    opacity: 1;
+  }
+}
+
 .nav {
   position: fixed;
   z-index: 50;
@@ -447,6 +472,7 @@ h3 {
   border-radius: 34px;
   border: 1px solid var(--line);
   background: var(--ink-soft);
+  transition: transform 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
 }
 
 .front-image {
@@ -540,14 +566,10 @@ h3 {
 }
 
 /* Stretched link: the whole linked card is clickable. */
-.front-card.is-linked {
-  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
-}
-
-.front-card.is-linked:hover {
+.front-card:hover {
   transform: translateY(-4px);
   border-color: rgba(201, 159, 92, 0.45);
-  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(201, 159, 92, 0.25);
 }
 
 .front-card.is-linked:hover .front-link svg {
@@ -622,10 +644,10 @@ h3 {
   margin-top: auto;
 }
 
-.project-card.is-linked:hover {
+.project-card:hover {
   transform: translateY(-4px);
   border-color: rgba(201, 159, 92, 0.45);
-  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(201, 159, 92, 0.25);
 }
 
 .project-card.is-linked:hover .front-link svg {
