@@ -1,4 +1,5 @@
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
+import { motion, useReducedMotion, useScroll, useTransform, type Variants } from 'motion/react'
+import type { ReactNode } from 'react'
 import {
   ArrowUpRight,
   BrainCircuit,
@@ -15,6 +16,89 @@ import {
   Wrench,
 } from 'lucide-react'
 import './App.css'
+
+const fadeRise: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+}
+
+const staggerParent: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+}
+
+const heroParent: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+}
+
+const wordParent: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+}
+
+const VIEWPORT = { once: true, amount: 0.2 } as const
+
+function Reveal({ children, className }: { children: ReactNode; className?: string }) {
+  const reduceMotion = useReducedMotion()
+  if (reduceMotion) return <div className={className}>{children}</div>
+  return (
+    <motion.div
+      className={className}
+      variants={fadeRise}
+      initial="hidden"
+      whileInView="show"
+      viewport={VIEWPORT}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+function Stagger({ children, className }: { children: ReactNode; className?: string }) {
+  const reduceMotion = useReducedMotion()
+  if (reduceMotion) return <div className={className}>{children}</div>
+  return (
+    <motion.div
+      className={className}
+      variants={staggerParent}
+      initial="hidden"
+      whileInView="show"
+      viewport={VIEWPORT}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+function StaggerItem({
+  children,
+  className,
+  as = 'div',
+}: {
+  children: ReactNode
+  className?: string
+  as?: 'div' | 'article'
+}) {
+  const reduceMotion = useReducedMotion()
+  if (as === 'article') {
+    if (reduceMotion) return <article className={className}>{children}</article>
+    return (
+      <motion.article className={className} variants={fadeRise}>
+        {children}
+      </motion.article>
+    )
+  }
+  if (reduceMotion) return <div className={className}>{children}</div>
+  return (
+    <motion.div className={className} variants={fadeRise}>
+      {children}
+    </motion.div>
+  )
+}
+
+// These symbols are used by later tasks; referenced here to satisfy noUnusedLocals.
+void [heroParent, wordParent, Reveal, Stagger, StaggerItem]
 
 const CATALOGO_URL = 'https://catalogo-digital-opella.vercel.app/'
 const ENCARTEZAP_URL = 'https://www.encartezap.com.br'
