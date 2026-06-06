@@ -198,6 +198,14 @@ h3 {
   line-height: 1.55;
 }
 
+.hero-note {
+  margin-top: 18px;
+  max-width: 620px;
+  color: var(--muted);
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+  line-height: 1.6;
+}
+
 .hero-actions,
 .cta-actions {
   display: flex;
@@ -348,9 +356,13 @@ h3 {
   letter-spacing: -0.055em;
 }
 
+.intro-lead {
+  margin-top: 4px;
+}
+
 .intro-body {
-  margin-top: 20px;
-  max-width: 650px;
+  margin-top: 18px;
+  max-width: 720px;
   color: var(--paper-muted);
   font-size: clamp(1.02rem, 1.6vw, 1.2rem);
   line-height: 1.6;
@@ -424,7 +436,7 @@ h3 {
 
 .fronts-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
 
@@ -557,6 +569,73 @@ h3 {
 
 .front-link:focus-visible {
   outline: none;
+}
+
+/* Featured front (no photo): wine/gold gradient card, content flows naturally. */
+.front-card.is-featured {
+  display: flex;
+  background:
+    radial-gradient(circle at 82% 4%, rgba(201, 159, 92, 0.16), transparent 26rem),
+    linear-gradient(135deg, rgba(93, 31, 39, 0.5), rgba(21, 19, 16, 0.82));
+  border-color: rgba(239, 231, 214, 0.16);
+}
+
+.front-card.is-featured .front-content {
+  position: relative;
+  inset: auto;
+  align-self: center;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 3vw, 34px);
+  border-radius: 28px;
+  border: 1px solid var(--line);
+  background: rgba(239, 231, 214, 0.055);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.project-card .eyebrow {
+  margin-bottom: 12px;
+}
+
+.project-card h3 {
+  margin-bottom: 14px;
+}
+
+.project-card p {
+  color: var(--paper-muted);
+  line-height: 1.65;
+}
+
+.project-card .front-meta {
+  margin-top: auto;
+}
+
+.project-card.is-linked:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201, 159, 92, 0.45);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.4);
+}
+
+.project-card.is-linked:hover .front-link svg {
+  transform: translate(2px, -2px);
+}
+
+.project-card:focus-within {
+  border-color: var(--gold);
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }
 
 .split-section {
@@ -734,11 +813,16 @@ footer {
     min-height: auto;
   }
 
-  .fronts-grid {
+  .fronts-grid,
+  .projects-grid {
     grid-template-columns: 1fr;
   }
 
   .front-card {
+    min-height: auto;
+  }
+
+  .front-card.is-featured {
     min-height: auto;
   }
 
