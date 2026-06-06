@@ -16,6 +16,12 @@ const ENCARTEZAP_URL = 'https://www.encartezap.com.br'
 const JOTAVFIT_URL = 'https://www.instagram.com/jotav.fit/'
 const EMAIL = 'contato@jotavictor.com'
 
+const heroSignals = [
+  'RCA no varejo farmacêutico',
+  'EncarteZap no ar',
+  '@jotav.fit em construção',
+]
+
 // Image filenames are legacy; mapped by the visible photo, not by filename.
 const fronts = [
   {
@@ -25,6 +31,7 @@ const fronts = [
     body:
       'Levo produto para dentro da farmácia, negocio, acompanho giro e entendo o que o mercado compra de verdade. O campo me dá problema real para resolver. Não teoria bonita.',
     image: '/images/joao-work.jpg',
+    imagePosition: 'center 42%',
     alt: 'João Victor de uniforme de trabalho, atuando no varejo farmacêutico',
     icon: Store,
     link: null,
@@ -38,6 +45,7 @@ const fronts = [
     body:
       'O EncarteZap nasceu de uma dor simples: campanha cara, mensagem perdida e cliente que não vê a oferta. Transformei isso em uma vitrine digital prática para farmácias venderem melhor no WhatsApp. Está no ar e funcionando.',
     image: '/images/joao-gym.jpg',
+    imagePosition: 'center 38%',
     alt: 'João Victor a caminho de uma visita comercial',
     icon: MessageCircle,
     link: ENCARTEZAP_URL,
@@ -51,6 +59,7 @@ const fronts = [
     body:
       'Mostro a construção física como ela é: treino pesado, tentativa, repetição, evolução e constância. Não é sobre parecer atleta de Instagram. É sobre virar o cara que cumpre o que promete.',
     image: '/images/joao-car.jpg',
+    imagePosition: 'center 42%',
     alt: 'João Victor treinando na academia',
     icon: Dumbbell,
     link: JOTAVFIT_URL,
@@ -151,6 +160,11 @@ function App() {
                 Ver o que estou construindo
               </a>
             </div>
+            <ul className="hero-signals" aria-label="Sinais concretos de contexto">
+              {heroSignals.map((signal) => (
+                <li key={signal}>{signal}</li>
+              ))}
+            </ul>
           </motion.div>
 
           <motion.div className="portrait-stage" style={{ y: heroY }}>
@@ -219,6 +233,7 @@ function App() {
                   <img
                     src={front.image}
                     alt={front.alt}
+                    style={{ objectPosition: front.imagePosition }}
                     width="720"
                     height="1280"
                     loading="eager"

@@ -58,6 +58,8 @@ Qualquer mudança proposta deve passar nos dois antes de commit/push.
 
 ## Estrutura de arquivos (não mude sem pedido)
 
+- `PRODUCT.md` — posicionamento, público, promessa e tom do site.
+- `DESIGN.md` — tokens visuais, layout language, componentes e anti-slop bans.
 - `index.html` — título, meta, JSON-LD Person, root + entry script.
 - `src/App.tsx` — toda a lógica e conteúdo (fronts, systems/processos, principles, proofPoints, CTA, footer). Componentes inline.
 - `src/App.css` — design system completo + responsivo (duas media queries principais).
