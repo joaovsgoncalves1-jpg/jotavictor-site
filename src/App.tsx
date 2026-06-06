@@ -2,16 +2,21 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import {
   ArrowUpRight,
   BrainCircuit,
+  Code,
   Dumbbell,
   Flame,
+  Hammer,
+  LayoutGrid,
   MessageCircle,
+  Pill,
   Route,
   ShieldCheck,
   Sparkles,
-  Store,
+  Wrench,
 } from 'lucide-react'
 import './App.css'
 
+const CATALOGO_URL = 'https://catalogo-digital-opella.vercel.app/'
 const ENCARTEZAP_URL = 'https://www.encartezap.com.br'
 const JOTAVFIT_URL = 'https://www.instagram.com/jotav.fit/'
 const EMAIL = 'contato@jotavictor.com'
@@ -19,43 +24,87 @@ const EMAIL = 'contato@jotavictor.com'
 // Image filenames are legacy; mapped by the visible photo, not by filename.
 const fronts = [
   {
-    eyebrow: 'Operação comercial',
-    status: 'Todo dia, no campo',
-    title: 'Varejo farmacêutico, no balcão e na rua.',
+    eyebrow: 'Farmácia e campo',
+    title: 'Perto da operação real.',
     body:
-      'Levo produto para dentro da farmácia, negocio, acompanho giro e entendo o que o mercado compra de verdade. O campo me dá problema real para resolver. Não teoria bonita.',
+      'Trabalho perto da operação real: farmácia, balcão, comprador, campanha, giro, estoque, preço e relacionamento. É no campo que eu entendo o que realmente trava uma venda, o que facilita uma decisão e o que precisa virar processo.',
     image: '/images/joao-work.jpg',
     alt: 'João Victor de uniforme de trabalho, atuando no varejo farmacêutico',
-    icon: Store,
-    link: null,
-    linkLabel: null,
-    linkAria: null,
+    icon: Pill,
   },
   {
-    eyebrow: 'EncarteZap',
-    status: 'No ar',
-    title: 'Oferta de farmácia direto no WhatsApp.',
+    eyebrow: 'Projetos digitais',
+    title: 'Problema simples vira ferramenta.',
     body:
-      'O EncarteZap nasceu de uma dor simples: campanha cara, mensagem perdida e cliente que não vê a oferta. Transformei isso em uma vitrine digital prática para farmácias venderem melhor no WhatsApp. Está no ar e funcionando.',
-    image: '/images/joao-gym.jpg',
+      'Gosto de pegar problemas simples da rotina e transformar em ferramenta. Às vezes é um catálogo. Às vezes é uma automação. Às vezes é um sistema interno. O objetivo não é parecer tecnológico. É fazer funcionar melhor.',
+    image: '/images/joao-car.jpg',
     alt: 'João Victor a caminho de uma visita comercial',
+    icon: Code,
+  },
+  {
+    eyebrow: 'Treino e conteúdo',
+    title: 'Calistenia como base.',
+    body:
+      'A calistenia é uma das bases da minha rotina. No Jotav.fit eu compartilho minha evolução, meus treinos e a construção física sem tentar parecer um personagem pronto. É treino real, tentativa real, erro real e progresso real.',
+    image: '/images/joao-gym.jpg',
+    alt: 'João Victor treinando',
+    icon: Dumbbell,
+  },
+  {
+    eyebrow: 'Rotina e disciplina',
+    title: 'A vida como sistema.',
+    body:
+      'Tenho interesse em sistemas pessoais de execução: hábito, tarefa, meta, revisão e direção. A Praxis nasce dessa vontade de transformar disciplina em algo mais visível, menos dependente de motivação e mais conectado com a vida real.',
+    image: null,
+    alt: null,
+    icon: Flame,
+  },
+]
+
+const projects = [
+  {
+    icon: LayoutGrid,
+    eyebrow: 'Catálogo Digital',
+    title: 'Catálogo Digital',
+    status: 'No ar',
+    body:
+      'Uma ferramenta criada para facilitar a vida dos meus clientes no varejo farmacêutico. A ideia é simples: organizar produtos, campanhas e oportunidades em um link fácil de acessar, para o cliente consultar e fazer pedido com menos atrito. Uma solução prática, nascida da rotina de campo.',
+    link: CATALOGO_URL,
+    linkLabel: 'Abrir catálogo',
+    linkAria: 'Abrir o Catálogo Digital em nova aba',
+  },
+  {
     icon: MessageCircle,
+    eyebrow: 'EncarteZap',
+    title: 'EncarteZap',
+    status: 'No ar',
+    body:
+      'Pensado para ajudar farmácias a divulgarem ofertas de forma mais simples, bonita e direta. Enquanto o Catálogo ajuda na relação com meus clientes, o EncarteZap olha para a ponta da farmácia: como ela mostra a oferta, facilita o compartilhamento no WhatsApp e transforma promoção em algo mais organizado.',
     link: ENCARTEZAP_URL,
     linkLabel: 'encartezap.com.br',
     linkAria: 'Abrir o EncarteZap em nova aba',
   },
   {
-    eyebrow: 'Jotav.fit',
-    status: 'Publicando',
-    title: 'Treino puxado, sem personagem.',
-    body:
-      'Mostro a construção física como ela é: treino pesado, tentativa, repetição, evolução e constância. Não é sobre parecer atleta de Instagram. É sobre virar o cara que cumpre o que promete.',
-    image: '/images/joao-car.jpg',
-    alt: 'João Victor treinando na academia',
     icon: Dumbbell,
+    eyebrow: 'Jotav.fit',
+    title: 'Jotav.fit',
+    status: 'Publicando',
+    body:
+      'Meu projeto de conteúdo sobre treino, calistenia e construção física. Não é sobre mostrar uma vida perfeita. É sobre registrar a construção: treino pesado, constância, evolução técnica e disciplina no dia a dia.',
     link: JOTAVFIT_URL,
     linkLabel: '@jotav.fit',
     linkAria: 'Abrir o Instagram @jotav.fit em nova aba',
+  },
+  {
+    icon: Hammer,
+    eyebrow: 'Praxis',
+    title: 'Praxis',
+    status: 'Em construção',
+    body:
+      'Um sistema pessoal de rotina, hábitos e execução. Ainda está tomando forma, mas representa uma ideia importante para mim: parar de depender só de vontade e começar a enxergar a própria vida como um sistema. O que eu faço, o que eu evito, o que eu repito e o que eu construo.',
+    link: null,
+    linkLabel: null,
+    linkAria: null,
   },
 ]
 
@@ -63,42 +112,28 @@ const systems = [
   {
     icon: Route,
     title: 'Do campo pro produto',
-    body: 'O problema aparece na farmácia. Eu anoto, testo, organizo e transformo em ferramenta. Foi assim que o EncarteZap nasceu.',
+    body: 'O problema aparece na farmácia. Eu anoto, testo, organizo e transformo em ferramenta. Foi assim que o Catálogo Digital e o EncarteZap nasceram.',
   },
   {
     icon: BrainCircuit,
-    title: 'IA pra tirar peso operacional',
-    body: 'Uso IA para reduzir repetição, organizar informação solta e sobrar tempo pra vender, decidir e executar.',
+    title: 'IA pra tirar peso da rotina',
+    body: 'Uso IA para organizar trabalho, estudar, criar processos e automatizar tarefas repetitivas. Quando ela reduz repetição, sobra tempo pra vender, decidir e executar.',
   },
   {
-    icon: Flame,
-    title: 'Forja',
-    body: 'Sistema pessoal que estou montando: hábito, tarefa e meta viram placar. É difícil enganar um número que te encara na tela todo dia.',
+    icon: Wrench,
+    title: 'Da ideia à ferramenta',
+    body: 'Não me interessa IA como moda. Me interessa quando ela tira peso da rotina e ajuda a executar melhor. Ideia que não vira coisa funcionando fica só na cabeça.',
   },
 ]
 
 const principles = [
-  'Negócio real antes de discurso bonito.',
-  'IA só vale quando vira processo.',
-  'Disciplina funciona melhor como sistema do que como força de vontade.',
-  'Conteúdo bom vem de vida vivida, não de personagem.',
-  'Não quero vender uma imagem de produtividade.',
-  'Quero mostrar o trabalho acontecendo.',
-]
-
-const proofPoints = [
-  {
-    label: 'Comercial',
-    text: 'Varejo farmacêutico no campo: balcão, rua, negociação, ponto de venda e leitura do que realmente gira.',
-  },
-  {
-    label: 'Código',
-    text: 'Uso IA e automação para cortar trabalho repetido, organizar operação e transformar problema real em ferramenta.',
-  },
-  {
-    label: 'Treino',
-    text: 'Treino pesado como base. Quando o corpo desanda, a rotina cobra.',
-  },
+  'Problema real antes de ferramenta bonita.',
+  'Menos discurso, mais coisa funcionando.',
+  'Treino como base de disciplina.',
+  'IA como ferramenta, não como distração.',
+  'Conteúdo vindo da vida real, não de personagem.',
+  'Processo melhor que empolgação.',
+  'Construção pequena, constante e visível.',
 ]
 
 function App() {
@@ -117,8 +152,9 @@ function App() {
           JV
         </a>
         <div className="nav-links">
+          <a href="#sobre">Sobre</a>
           <a href="#frentes">Frentes</a>
-          <a href="#ia">Processos</a>
+          <a href="#projetos">Projetos</a>
           <a href="#principios">Princípios</a>
           <a href="#contato">Contato</a>
         </div>
@@ -134,21 +170,33 @@ function App() {
           >
             <p className="kicker">jotavictor.com</p>
             <h1>
-              <span>Vendo na rua.</span>
-              <span>Construo no código.</span>
-              <span>Me forjo no treino.</span>
+              <span>Vida real,</span>
+              <span>trabalho real,</span>
+              <span>projetos reais.</span>
             </h1>
             <p className="hero-sub">
-              Atuo no varejo farmacêutico de perto: balcão, negociação, giro e campo. O
-              problema que aparece na operação vira processo, produto ou automação. O treino
-              mantém tudo de pé.
+              Trabalho no varejo farmacêutico, treino calistenia e construo ferramentas
+              digitais a partir dos problemas que encontro na prática.
+            </p>
+            <p className="hero-note">
+              Este site é meu ponto público na internet. Aqui eu organizo o que estou
+              vivendo e construindo: trabalho, projetos, treino, conteúdo e algumas ideias
+              que ainda estão tomando forma.
             </p>
             <div className="hero-actions">
-              <a className="button primary" href={`mailto:${EMAIL}`}>
-                Falar comigo <ArrowUpRight size={18} aria-hidden="true" />
+              <a className="button primary" href="#projetos">
+                Ver projetos <ArrowUpRight size={18} aria-hidden="true" />
               </a>
-              <a className="button ghost" href="#frentes">
-                Ver o que estou construindo
+              <a className="button ghost" href={`mailto:${EMAIL}`}>
+                Falar comigo
+              </a>
+              <a
+                className="button ghost"
+                href={JOTAVFIT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Ver Jotav.fit
               </a>
             </div>
           </motion.div>
@@ -165,7 +213,7 @@ function App() {
               <div className="portrait-glow" />
               <div className="portrait-caption">
                 <span>Campo</span>
-                <span>Código</span>
+                <span>Projetos</span>
                 <span>Treino</span>
               </div>
             </motion.div>
@@ -176,34 +224,36 @@ function App() {
         </div>
       </section>
 
-      <section className="intro-panel">
+      <section className="intro-panel" id="sobre">
         <div className="intro-copy">
+          <p className="kicker">Sobre mim</p>
           <p className="intro-lead">
-            Não é portfólio.
-            <br />É construção em andamento.
+            Sou João Victor, mas muita gente me conhece como Jota.
           </p>
           <p className="intro-body">
-            Aqui entra o que eu vivo todo dia: venda, produto, código e treino. Não como
-            personagem. Como rotina real.
+            Hoje moro em Natal-RN e vivo uma fase de construção em várias áreas ao mesmo
+            tempo. Trabalho no setor farmacêutico, estou ajustando meus caminhos de estudo e
+            carreira, treino com foco em calistenia e venho criando projetos digitais que
+            nascem dos problemas que vejo no dia a dia.
           </p>
-        </div>
-        <div className="proof-grid" aria-label="As três frentes de trabalho">
-          {proofPoints.map((point) => (
-            <div className="proof-item" key={point.label}>
-              <span>{point.label}</span>
-              <p>{point.text}</p>
-            </div>
-          ))}
+          <p className="intro-body">
+            Não me vejo só como “o cara do treino”, “o cara da farmácia” ou “o cara da IA”.
+            Na prática, tudo isso se mistura. O trabalho de campo me mostra problemas reais.
+            A tecnologia me ajuda a transformar esses problemas em processo. O treino me dá
+            disciplina para continuar quando a empolgação passa.
+          </p>
+          <p className="intro-body">Este site existe para organizar isso de um jeito simples.</p>
         </div>
       </section>
 
       <section className="section" id="frentes">
         <div className="section-heading">
-          <p className="kicker">O que está em campo</p>
-          <h2>O que estou construindo agora.</h2>
+          <p className="kicker">Frentes</p>
+          <h2>Onde minha vida acontece hoje.</h2>
           <p>
-            O campo mostra o problema. O código organiza a solução. O treino sustenta a
-            disciplina. Sem cargo bonito. Sem personagem. Só construção real.
+            São as frentes que estou construindo ao mesmo tempo. Cada uma alimenta a outra:
+            o campo mostra o problema, a tecnologia vira processo e o treino sustenta a
+            disciplina.
           </p>
         </div>
 
@@ -212,39 +262,69 @@ function App() {
             const Icon = front.icon
             return (
               <article
-                className={`front-card${front.link ? ' is-linked' : ''}`}
-                key={front.title}
+                className={`front-card${front.image ? '' : ' is-featured'}`}
+                key={front.eyebrow}
               >
-                <div className="front-image">
-                  <img
-                    src={front.image}
-                    alt={front.alt}
-                    width="720"
-                    height="1280"
-                    loading="eager"
-                    decoding="async"
-                  />
-                </div>
+                {front.image && (
+                  <div className="front-image">
+                    <img
+                      src={front.image}
+                      alt={front.alt ?? ''}
+                      width="720"
+                      height="1280"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                )}
                 <div className="front-content">
                   <span className="icon-pill"><Icon size={18} aria-hidden="true" /></span>
                   <p className="eyebrow">{front.eyebrow}</p>
                   <h3>{front.title}</h3>
                   <p>{front.body}</p>
-                  <div className="front-meta">
-                    <span className="front-status">{front.status}</span>
-                    {front.link && (
-                      <a
-                        className="front-link"
-                        href={front.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={front.linkAria ?? undefined}
-                      >
-                        {front.linkLabel}
-                        <ArrowUpRight size={16} aria-hidden="true" />
-                      </a>
-                    )}
-                  </div>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+      </section>
+
+      <section className="section" id="projetos">
+        <div className="section-heading">
+          <p className="kicker">Projetos</p>
+          <h2>O que eu já coloquei de pé.</h2>
+          <p>
+            Algumas coisas já estão rodando, outras ainda estão tomando forma. Todas seguem
+            a mesma lógica: pegar um problema real e transformar em algo útil.
+          </p>
+        </div>
+
+        <div className="projects-grid">
+          {projects.map((project) => {
+            const Icon = project.icon
+            return (
+              <article
+                className={`project-card${project.link ? ' is-linked' : ''}`}
+                key={project.eyebrow}
+              >
+                <span className="icon-pill"><Icon size={18} aria-hidden="true" /></span>
+                <p className="eyebrow">{project.eyebrow}</p>
+                <h3>{project.title}</h3>
+                <p>{project.body}</p>
+                <div className="front-meta">
+                  <span className="front-status">{project.status}</span>
+                  {project.link && (
+                    <a
+                      className="front-link"
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={project.linkAria ?? undefined}
+                    >
+                      {project.linkLabel}
+                      <ArrowUpRight size={16} aria-hidden="true" />
+                    </a>
+                  )}
                 </div>
               </article>
             )
@@ -254,12 +334,12 @@ function App() {
 
       <section className="split-section" id="ia">
         <div className="sticky-copy">
-          <p className="kicker">Processos e IA</p>
+          <p className="kicker">IA aplicada à rotina</p>
           <h2>Menos ferramenta nova. Mais processo que funciona.</h2>
           <p>
-            IA só importa quando tira peso da rotina. Áudio que vira tarefa. Conversa que vira
-            resumo. Papelada que vira decisão. Problema do campo que vira produto. Ferramenta
-            por ferramenta é distração. Processo bem montado muda o resultado.
+            Uso IA para organizar trabalho, estudar, criar processos e automatizar tarefas
+            repetitivas. Não me interessa IA como moda. Me interessa quando ela tira peso da
+            rotina, reduz repetição e ajuda a executar melhor.
           </p>
         </div>
         <div className="system-stack">
@@ -296,23 +376,23 @@ function App() {
       <section className="final-cta" id="contato">
         <div>
           <Sparkles className="spark" size={28} aria-hidden="true" />
-          <h2>Comercial, código e treino. A mesma construção em formas diferentes.</h2>
+          <h2>Um resumo público do que estou construindo.</h2>
           <p>
-            No varejo, eu entendo o problema. No código, transformo em sistema. No treino,
-            construo a disciplina para sustentar tudo isso. EncarteZap, Jotav.fit, a Forja que
-            estou montando e o trabalho no campo fazem parte da mesma ideia: resolver problema
-            real com processo, tecnologia e rotina.
+            Algumas coisas já estão rodando. Outras ainda estão tomando forma. Mas tudo
+            segue a mesma lógica: viver na prática, observar problemas reais, criar processo
+            e colocar algo útil no mundo. Se quiser trocar ideia, conhecer algum projeto ou
+            falar comigo, me chama no Instagram ou pelo e-mail.
           </p>
         </div>
         <div className="cta-actions">
           <a className="button primary" href={`mailto:${EMAIL}`}>
             Falar comigo <ArrowUpRight size={18} aria-hidden="true" />
           </a>
-          <a className="button ghost" href={ENCARTEZAP_URL} target="_blank" rel="noopener noreferrer">
-            Conhecer o EncarteZap <ArrowUpRight size={16} aria-hidden="true" />
-          </a>
           <a className="button ghost" href={JOTAVFIT_URL} target="_blank" rel="noopener noreferrer">
             Ver o Jotav.fit <ArrowUpRight size={16} aria-hidden="true" />
+          </a>
+          <a className="button ghost" href={ENCARTEZAP_URL} target="_blank" rel="noopener noreferrer">
+            Conhecer o EncarteZap <ArrowUpRight size={16} aria-hidden="true" />
           </a>
         </div>
       </section>
@@ -320,6 +400,7 @@ function App() {
       <footer>
         <span>© {currentYear} João Victor · jotavictor.com</span>
         <nav className="footer-links" aria-label="Links de João Victor">
+          <a href={CATALOGO_URL} target="_blank" rel="noopener noreferrer">Catálogo Digital</a>
           <a href={ENCARTEZAP_URL} target="_blank" rel="noopener noreferrer">EncarteZap</a>
           <a href={JOTAVFIT_URL} target="_blank" rel="noopener noreferrer">Instagram</a>
           <a href={`mailto:${EMAIL}`}>E-mail</a>
