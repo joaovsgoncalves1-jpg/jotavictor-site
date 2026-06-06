@@ -326,7 +326,7 @@ function App() {
           </StaggerItem>
           <StaggerItem>
             <p className="intro-body">
-              Não me vejo só como "o cara do treino", "o cara da farmácia" ou "o cara da IA".
+              Não me vejo só como “o cara do treino”, “o cara da farmácia” ou “o cara da IA”.
               Na prática, tudo isso se mistura. O trabalho de campo me mostra problemas reais.
               A tecnologia me ajuda a transformar esses problemas em processo. O treino me dá
               disciplina para continuar quando a empolgação passa.
