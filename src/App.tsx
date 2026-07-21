@@ -1,5 +1,5 @@
-import { motion, useReducedMotion, useScroll, useTransform, type Variants } from "motion/react"
-import type { ReactNode } from "react"
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
+import type { CSSProperties, ReactNode } from "react"
 import {
   ArrowUpRight,
   Building2,
@@ -17,99 +17,62 @@ import {
 } from "lucide-react"
 import "./App.css"
 
-const fadeRise: Variants = {
-  hidden: { opacity: 0, y: 36 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-  },
+/** CSS entrance — always ends visible. Framer whileInView was leaving opacity:0 stuck. */
+function Rise({
+  children,
+  className,
+  delay = 0,
+  as = "div",
+}: {
+  children: ReactNode
+  className?: string
+  delay?: number
+  as?: "div" | "article"
+}) {
+  const reduceMotion = useReducedMotion()
+  const cls = [className, !reduceMotion ? "rise-in" : null].filter(Boolean).join(" ")
+  const style = !reduceMotion ? ({ ["--rise-delay" as string]: `${delay}ms` } as CSSProperties) : undefined
+  if (as === "article") {
+    return (
+      <article className={cls} style={style}>
+        {children}
+      </article>
+    )
+  }
+  return (
+    <div className={cls} style={style}>
+      {children}
+    </div>
+  )
 }
-
-// Parent must NOT stay at opacity 0 — only orchestrates children.
-const staggerParent: Variants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.09, delayChildren: 0.04 },
-  },
-}
-
-const heroParent: Variants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.11, delayChildren: 0.06 },
-  },
-}
-
-const VIEWPORT = { once: true, amount: 0.12, margin: "0px 0px -12% 0px" } as const
 
 function Reveal({ children, className }: { children: ReactNode; className?: string }) {
-  const reduceMotion = useReducedMotion()
-  if (reduceMotion) return <div className={className}>{children}</div>
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 36 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={VIEWPORT}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <Rise className={className} delay={0}>
       {children}
-    </motion.div>
+    </Rise>
   )
 }
 
 function Stagger({ children, className }: { children: ReactNode; className?: string }) {
-  const reduceMotion = useReducedMotion()
-  if (reduceMotion) return <div className={className}>{children}</div>
-  return (
-    <motion.div
-      className={className}
-      variants={staggerParent}
-      initial="hidden"
-      whileInView="show"
-      viewport={VIEWPORT}
-    >
-      {children}
-    </motion.div>
-  )
+  return <div className={className}>{children}</div>
 }
 
 function StaggerItem({
   children,
   className,
   as = "div",
+  delay = 0,
 }: {
   children: ReactNode
   className?: string
   as?: "div" | "article"
+  delay?: number
 }) {
-  const reduceMotion = useReducedMotion()
-  if (as === "article") {
-    if (reduceMotion) return <article className={className}>{children}</article>
-    return (
-      <motion.article
-        className={className}
-        variants={fadeRise}
-        initial="hidden"
-        whileInView="show"
-        viewport={VIEWPORT}
-      >
-        {children}
-      </motion.article>
-    )
-  }
-  if (reduceMotion) return <div className={className}>{children}</div>
   return (
-    <motion.div
-      className={className}
-      variants={fadeRise}
-      initial="hidden"
-      whileInView="show"
-      viewport={VIEWPORT}
-    >
+    <Rise className={className} as={as} delay={delay}>
       {children}
-    </motion.div>
+    </Rise>
   )
 }
 
@@ -274,36 +237,36 @@ function App() {
       {/* Hero Section */}
       <section className="hero-section" id="top">
         <div className="hero-grid">
-          <motion.div
-            className="hero-copy"
-            variants={reduceMotion ? undefined : heroParent}
-            initial={reduceMotion ? false : "hidden"}
-            animate={reduceMotion ? undefined : "show"}
-          >
-            <motion.div className="hero-badge" variants={reduceMotion ? undefined : fadeRise}>
+          <div className="hero-copy">
+            <Rise className="hero-badge" delay={0}>
               <span className="live-dot" />
               <span>João Victor · Builder & RCA</span>
-            </motion.div>
+            </Rise>
 
-            <motion.h1 variants={reduceMotion ? undefined : fadeRise}>
-              <span>Eu pego problema</span>
-              <span>da rua e viro</span>
-              <span className="accent-text">ferramenta.</span>
-            </motion.h1>
+            <Rise delay={80}>
+              <h1>
+                <span>Eu pego problema</span>
+                <span>da rua e viro</span>
+                <span className="accent-text">ferramenta.</span>
+              </h1>
+            </Rise>
 
-            <motion.div className="mother-quote" variants={reduceMotion ? undefined : fadeRise}>
+            <Rise className="mother-quote" delay={160}>
               <p>
-                “Vendo na rua, construo no código e me forjo no treino. Campo, produto e disciplina no mesmo lugar.”
+                “Vendo na rua, construo no código e me forjo no treino. Campo, produto e disciplina no
+                mesmo lugar.”
               </p>
-            </motion.div>
+            </Rise>
 
-            <motion.p className="hero-sub" variants={reduceMotion ? undefined : fadeRise}>
-              Representante comercial no varejo farmacêutico em Natal-RN e criador do{" "}
-              <strong>EncarteZap</strong>. Não é portfólio teórico: é o que construo na prática para
-              resolver dores reais de campo.
-            </motion.p>
+            <Rise delay={220}>
+              <p className="hero-sub">
+                Representante comercial no varejo farmacêutico em Natal-RN e criador do{" "}
+                <strong>EncarteZap</strong>. Não é portfólio teórico: é o que construo na prática para
+                resolver dores reais de campo.
+              </p>
+            </Rise>
 
-            <motion.div className="hero-actions" variants={reduceMotion ? undefined : fadeRise}>
+            <Rise className="hero-actions" delay={300}>
               <a
                 className="button primary"
                 href={ENCARTEZAP_URL}
@@ -318,11 +281,11 @@ function App() {
               <a className="button ghost" href={"mailto:" + EMAIL}>
                 Falar comigo
               </a>
-            </motion.div>
-          </motion.div>
+            </Rise>
+          </div>
 
           <motion.div className="portrait-stage" style={{ y: heroY }}>
-            <motion.div className="portrait-card" style={{ scale: heroScale }}>
+            <motion.div className={"portrait-card" + (reduceMotion ? "" : " rise-in")} style={{ scale: heroScale }}>
               <img
                 src="/images/joao-hero.jpg"
                 alt="Retrato de João Victor"
@@ -387,13 +350,14 @@ function App() {
         </Reveal>
 
         <Stagger className="projects-grid">
-          {projects.map((project) => {
+          {projects.map((project, i) => {
             const Icon = project.icon
             return (
               <StaggerItem
                 as="article"
                 className={"project-card" + (project.isFlagship ? " is-flagship" : "") + (project.link ? " is-linked" : "")}
                 key={project.key}
+                delay={i * 90}
               >
                 {project.isFlagship && (
                   <div className="flagship-badge">
@@ -444,10 +408,10 @@ function App() {
         </Reveal>
 
         <Stagger className="process-grid">
-          {processSteps.map((step) => {
+          {processSteps.map((step, i) => {
             const Icon = step.icon
             return (
-              <StaggerItem className="process-card" key={step.num}>
+              <StaggerItem className="process-card" key={step.num} delay={i * 90}>
                 <div className="process-top">
                   <span className="process-num">{step.num}</span>
                   <span className="icon-pill muted">
@@ -472,8 +436,8 @@ function App() {
             <p className="manifesto-sub">Regras simples que guiam meu código, venda e treino.</p>
           </Reveal>
           <Stagger className="manifesto-grid">
-            {principles.map((principle) => (
-              <StaggerItem className="principle" key={principle}>
+            {principles.map((principle, i) => (
+              <StaggerItem className="principle" key={principle} delay={i * 60}>
                 <ShieldCheck size={18} aria-hidden="true" />
                 <span>{principle}</span>
               </StaggerItem>
@@ -491,10 +455,10 @@ function App() {
         </Reveal>
 
         <Stagger className="fronts-grid">
-          {realLifeFronts.map((front) => {
+          {realLifeFronts.map((front, i) => {
             const Icon = front.icon
             return (
-              <StaggerItem as="article" className="front-card" key={front.eyebrow}>
+              <StaggerItem as="article" className="front-card" key={front.eyebrow} delay={i * 90}>
                 <div className="front-image">
                   <img
                     src={front.image}
