@@ -106,14 +106,15 @@ img {
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: rgba(239, 231, 214, 0.08);
+  height: 4px;
+  background: rgba(239, 231, 214, 0.1);
   z-index: 100;
 }
 
 .top-progress-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--gold), var(--wine-light));
+  box-shadow: 0 0 12px rgba(201, 159, 92, 0.45);
 }
 
 /* Nav */

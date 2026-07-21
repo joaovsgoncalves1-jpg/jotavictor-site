@@ -18,31 +18,30 @@ import {
 import "./App.css"
 
 const fadeRise: Variants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 36 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.65, ease: [0.215, 0.61, 0.355, 1] },
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
   },
 }
 
+// Parent must NOT stay at opacity 0 — only orchestrates children.
 const staggerParent: Variants = {
-  hidden: { opacity: 0 },
+  hidden: {},
   show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.09, delayChildren: 0.04 },
   },
 }
 
 const heroParent: Variants = {
-  hidden: { opacity: 0 },
+  hidden: {},
   show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.11, delayChildren: 0.06 },
   },
 }
 
-const VIEWPORT = { once: true, amount: 0.1, margin: "0px 0px -40px 0px" } as const
+const VIEWPORT = { once: true, amount: 0.12, margin: "0px 0px -12% 0px" } as const
 
 function Reveal({ children, className }: { children: ReactNode; className?: string }) {
   const reduceMotion = useReducedMotion()
@@ -50,10 +49,10 @@ function Reveal({ children, className }: { children: ReactNode; className?: stri
   return (
     <motion.div
       className={className}
-      variants={fadeRise}
-      initial="hidden"
-      whileInView="show"
+      initial={{ opacity: 0, y: 36 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={VIEWPORT}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -89,14 +88,26 @@ function StaggerItem({
   if (as === "article") {
     if (reduceMotion) return <article className={className}>{children}</article>
     return (
-      <motion.article className={className} variants={fadeRise}>
+      <motion.article
+        className={className}
+        variants={fadeRise}
+        initial="hidden"
+        whileInView="show"
+        viewport={VIEWPORT}
+      >
         {children}
       </motion.article>
     )
   }
   if (reduceMotion) return <div className={className}>{children}</div>
   return (
-    <motion.div className={className} variants={fadeRise}>
+    <motion.div
+      className={className}
+      variants={fadeRise}
+      initial="hidden"
+      whileInView="show"
+      viewport={VIEWPORT}
+    >
       {children}
     </motion.div>
   )
