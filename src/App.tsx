@@ -18,21 +18,31 @@ import {
 import "./App.css"
 
 const fadeRise: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.215, 0.61, 0.355, 1] } },
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, ease: [0.215, 0.61, 0.355, 1] },
+  },
 }
 
 const staggerParent: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08, delayChildren: 0.04 } },
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
+  },
 }
 
 const heroParent: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
+  },
 }
 
-const VIEWPORT = { once: true, amount: 0.18 } as const
+const VIEWPORT = { once: true, amount: 0.1, margin: "0px 0px -40px 0px" } as const
 
 function Reveal({ children, className }: { children: ReactNode; className?: string }) {
   const reduceMotion = useReducedMotion()
@@ -92,7 +102,7 @@ function StaggerItem({
   )
 }
 
-// Fixed links and constants
+// Core URLs & Info
 const CATALOGO_URL = "https://catalogo-digital-opella.vercel.app/"
 const ENCARTEZAP_URL = "https://www.encartezap.com.br"
 const JOTAVFIT_URL = "https://www.instagram.com/jotav.fit/"
@@ -106,11 +116,11 @@ const projects = [
     eyebrow: "PRODUTO PRINCIPAL · NO AR",
     title: "EncarteZap",
     tagline: "Ofertas de farmácia direto no WhatsApp, sem agência.",
-    body: "Solução criada a partir da dor real do varejo farmacêutico. Permite que farmácias criem e enviem encartes promocionais profissionais em segundos direto pelo WhatsApp, eliminando campanhas caras e aumentando o giro de estoque.",
+    body: "Criei para resolver a dor das farmácias de bairro que precisam divulgar ofertas rápido no WhatsApp. Permite gerar encartes profissionais em segundos e girar estoque sem campanhas caras.",
     link: ENCARTEZAP_URL,
     linkLabel: "Conhecer o EncarteZap",
     linkAria: "Abrir o site do EncarteZap em nova aba",
-    status: "Produção real",
+    status: "No ar",
   },
   {
     key: "catalogo",
@@ -118,8 +128,8 @@ const projects = [
     icon: LayoutGrid,
     eyebrow: "FERRAMENTA DE CAMPO",
     title: "Catálogo Digital",
-    tagline: "Catálogo de ofertas e campanhas para o varejo farmacêutico.",
-    body: "Ferramenta desenvolvida para agilizar o atendimento aos meus clientes de farmácia. Agrupa produtos, condições comerciais e lançamentos em um link simples, acelerando a tomada de decisão no balcão.",
+    tagline: "Ofertas e campanhas rápidas para o varejo farmacêutico.",
+    body: "Ferramenta simples para agilizar o atendimento aos meus clientes de farmácia. Reúne produtos e condições comerciais em um link direto.",
     link: CATALOGO_URL,
     linkLabel: "Abrir catálogo",
     linkAria: "Abrir o Catálogo Digital em nova aba",
@@ -131,8 +141,8 @@ const projects = [
     icon: Flame,
     eyebrow: "SISTEMA PESSOAL",
     title: "Forja",
-    tagline: "Gestão de hábitos, tarefas e metas com placar visível.",
-    body: "Sistema pessoal de execução em construção. Substitui a motivação oscilante por um placar claro de hábitos, metas e entregas diárias — transformando disciplina em rotina mensurável.",
+    tagline: "Hábitos, tarefas e metas com placar visível.",
+    body: "Meu sistema pessoal de execução diária. Substitui a motivação oscilante por um placar claro de hábitos e entregas.",
     link: null,
     linkLabel: null,
     linkAria: null,
@@ -144,8 +154,8 @@ const projects = [
     icon: Dumbbell,
     eyebrow: "CONTEÚDO & TREINO",
     title: "Jotav.fit",
-    tagline: "Calistenia, treino de força e constância sem maquiagem.",
-    body: "Projeto de conteúdo focado em calistenia e evolução física real. Sem personagem de redes sociais: compartilhando treinos, rotina de constância, técnica e evolução diária.",
+    tagline: "Calistenia, força e constância sem maquiagem.",
+    body: "Conteúdo sobre calistenia e treino pesado sem personagem de internet. Compartilho a rotina real de evolução e disciplina.",
     link: JOTAVFIT_URL,
     linkLabel: "@jotav.fit",
     linkAria: "Abrir o Instagram @jotav.fit em nova aba",
@@ -158,48 +168,46 @@ const processSteps = [
     num: "01",
     icon: Building2,
     title: "Dor Real no Campo",
-    subtitle: "Rua, balcão e varejo",
-    body: "O problema aparece na rotina de vendas no setor farmacêutico. Eu observo o travamento no balcão, entendo a fricção e defino exatamente o que precisa ser resolvido.",
+    subtitle: "Rua e balcão",
+    body: "Vejo a dor acontecer na rotina de vendas do varejo farmacêutico.",
   },
   {
     num: "02",
     icon: Code,
-    title: "Ferramenta & Automação",
-    subtitle: "Código rápido e IA",
-    body: "Construo soluções focadas em utilidade prática. Uso Inteligência Artificial e automação para eliminar trabalho repetitivo e colocar a ferramenta no ar em dias.",
+    title: "Ferramenta & Código",
+    subtitle: "Automação simples",
+    body: "Construo soluções diretas em código para eliminar gargalos da operação.",
   },
   {
     num: "03",
     icon: Hammer,
-    title: "Forja & Disciplina",
-    subtitle: "Treino e consistência",
-    body: "Ferramentas só funcionam com execução consistente. A rotina diária de calistenia e o sistema Forja alimentam o rigor e a resiliência para manter os projetos evoluindo.",
+    title: "Disciplina & Forja",
+    subtitle: "Constância diária",
+    body: "O treino pesado e o sistema Forja garantem a resiliência para entregar.",
   },
 ]
 
 const principles = [
-  "Problema da rua antes de ferramenta bonita.",
-  "Construção no ar vale mais que 100 protótipos em gaveta.",
-  "IA para tirar peso da rotina, nunca para teatro corporativo.",
-  "Conteúdo vindo da vida real, sem personagem de internet.",
-  "Processo e sistema superam surtos de motivação.",
-  "Treino pesado como âncora diária de disciplina.",
-  "Texto direto e prático: sem firula corporativa.",
+  "Problema da rua antes de código bonito.",
+  "Produto no ar vale mais que 100 ideias na gaveta.",
+  "IA para tirar trabalho braçal, nunca para teatro.",
+  "Conteúdo vindo da vida real, sem personagem.",
+  "Constância no treino e no trabalho supera qualquer motivação.",
 ]
 
 const realLifeFronts = [
   {
     eyebrow: "VAREJO FARMACÊUTICO",
     title: "Campo, balcão e negociação.",
-    body: "Trabalho diário no varejo farmacêutico (RCA). Giro de estoque, campanhas de vendas, relacionamento com compradores e dor real de balcão.",
+    body: "Minha rotina comercial no setor farmacêutico (RCA). É onde entendo a venda de verdade na prática.",
     image: "/images/joao-work.jpg",
-    alt: "João Victor de uniforme de trabalho, atuando no varejo farmacêutico",
+    alt: "João Victor atuando no varejo farmacêutico",
     icon: Pill,
   },
   {
     eyebrow: "ESTRADA & LABORATÓRIO",
     title: "A rua mostra o problema.",
-    body: "A rotina de deslocamento e visitas comerciais é o laboratório onde colho problemas reais antes de escrever qualquer linha de código.",
+    body: "A rotina na estrada e nas visitas comerciais é meu laboratório para criar ferramentas úteis.",
     image: "/images/joao-car.jpg",
     alt: "João Victor em deslocamento comercial",
     icon: Route,
@@ -207,7 +215,7 @@ const realLifeFronts = [
   {
     eyebrow: "CALISTENIA & DISCIPLINA",
     title: "Treino pesado sem atalho.",
-    body: "A calistenia e o treino de força são a base física da minha disciplina. Onde aprendo que progresso de verdade vem da repetição diária.",
+    body: "A calistenia é a base física da minha disciplina. Onde aprendo que resultado exige repetição diária.",
     image: "/images/joao-gym.jpg",
     alt: "João Victor treinando calistenia",
     icon: Dumbbell,
@@ -217,9 +225,9 @@ const realLifeFronts = [
 function App() {
   const reduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll()
-  const heroY = useTransform(scrollYProgress, [0, 0.35], [0, reduceMotion ? 0 : -50])
-  const heroScale = useTransform(scrollYProgress, [0, 0.35], [1, reduceMotion ? 1 : 1.05])
-  const lineProgress = useTransform(scrollYProgress, [0.05, 0.85], ["0%", "100%"])
+  const heroY = useTransform(scrollYProgress, [0, 0.35], [0, reduceMotion ? 0 : -45])
+  const heroScale = useTransform(scrollYProgress, [0, 0.35], [1, reduceMotion ? 1 : 1.04])
+  const lineProgress = useTransform(scrollYProgress, [0, 0.98], ["0%", "100%"])
 
   const currentYear = new Date().getFullYear()
 
@@ -274,14 +282,14 @@ function App() {
 
             <motion.div className="mother-quote" variants={reduceMotion ? undefined : fadeRise}>
               <p>
-                “Vendo na rua, construo no código e me forjo no treino. Campo, produto, automação e disciplina no mesmo lugar.”
+                “Vendo na rua, construo no código e me forjo no treino. Campo, produto e disciplina no mesmo lugar.”
               </p>
             </motion.div>
 
             <motion.p className="hero-sub" variants={reduceMotion ? undefined : fadeRise}>
-              Representante comercial no varejo farmacêutico, criador do{" "}
-              <strong>EncarteZap</strong> e praticante de calistenia. Não é portfólio teórico: é o
-              que construo na prática para resolver problemas reais.
+              Representante comercial no varejo farmacêutico em Natal-RN e criador do{" "}
+              <strong>EncarteZap</strong>. Não é portfólio teórico: é o que construo na prática para
+              resolver dores reais de campo.
             </motion.p>
 
             <motion.div className="hero-actions" variants={reduceMotion ? undefined : fadeRise}>
@@ -296,7 +304,7 @@ function App() {
               <a className="button ghost" href="#projetos">
                 Ver projetos
               </a>
-              <a className="button ghost" href={`mailto:${EMAIL}`}>
+              <a className="button ghost" href={"mailto:" + EMAIL}>
                 Falar comigo
               </a>
             </motion.div>
@@ -334,28 +342,26 @@ function App() {
           </StaggerItem>
           <StaggerItem>
             <h2 className="intro-lead">
-              Sou o João (Jota). Vendo na rua de dia, desenvolvo à noite, treino pesado de madrugada.
+              Sou o João. Vendo na rua de dia, desenvolvo à noite e me forjo no treino.
             </h2>
           </StaggerItem>
           <StaggerItem>
             <p className="intro-body">
-              Moro em Natal-RN e atuo no varejo farmacêutico negociando campo, balcão e giro de
-              estoque. Estar na rua todos os dias é o que me mostra onde a operação trava e onde a
-              tecnologia realmente faz sentido.
+              Moro em Natal-RN e trabalho no varejo farmacêutico negociando no balcão e no campo.
+              Estar na rua todos os dias me mostra exatamente onde a operação trava.
             </p>
           </StaggerItem>
           <StaggerItem>
             <p className="intro-body">
-              Não crio software por hobby teórico nem pra acumular portfólio bonito no GitHub.
-              Minha motivação é pegar uma dor real de vendas ou gestão — como a dificuldade de uma
-              farmácia divulgar ofertas de forma rápida — e transformar em produto simples como o{" "}
-              <strong>EncarteZap</strong>.
+              Não crio software por hobby teórico. Minha meta é pegar dores reais de vendas e
+              transformar em ferramentas simples — como o <strong>EncarteZap</strong> e o{" "}
+              <strong>Forja</strong>.
             </p>
           </StaggerItem>
           <StaggerItem>
             <p className="intro-body">
-              E a calistenia? É o motor de disciplina. Treinar forte diariamente garante a
-              resiliência física e mental para manter o ritmo sem depender de empolgação.
+              A calistenia e o treino diário são a base física da minha disciplina, garantindo
+              constância para entregar resultados de verdade.
             </p>
           </StaggerItem>
         </Stagger>
@@ -366,10 +372,7 @@ function App() {
         <Reveal className="section-heading">
           <p className="kicker">O QUE ESTOU CONSTRUINDO</p>
           <h2>Produtos reais nascidos da dor de campo.</h2>
-          <p>
-            Sem protótipos teóricos. Cada iniciativa aqui resolve uma dor concreta de mercado, de
-            vendas ou de disciplina pessoal.
-          </p>
+          <p>Sem protótipos teóricos. Cada projeto resolve um problema concreto da rotina.</p>
         </Reveal>
 
         <Stagger className="projects-grid">
@@ -378,9 +381,7 @@ function App() {
             return (
               <StaggerItem
                 as="article"
-                className={`project-card${project.isFlagship ? " is-flagship" : ""}${
-                  project.link ? " is-linked" : ""
-                }`}
+                className={"project-card" + (project.isFlagship ? " is-flagship" : "") + (project.link ? " is-linked" : "")}
                 key={project.key}
               >
                 {project.isFlagship && (
@@ -427,11 +428,8 @@ function App() {
       <section className="section" id="processo">
         <Reveal className="section-heading">
           <p className="kicker">COMO EU CONSTRUO</p>
-          <h2>Do campo ao código: o ciclo de execução.</h2>
-          <p>
-            Processo simples, direto e sem firula corporativa. Identificar o problema real, criar a
-            ferramenta e manter a disciplina na entrega.
-          </p>
+          <h2>Do campo ao código.</h2>
+          <p>Identificar a dor real, construir a ferramenta e manter a disciplina na entrega.</p>
         </Reveal>
 
         <Stagger className="process-grid">
@@ -458,11 +456,9 @@ function App() {
       <section className="manifesto" id="principios">
         <div className="manifesto-inner">
           <Reveal>
-            <p className="kicker">DIRETRIZES DE TRABALHO</p>
+            <p className="kicker">PRINCÍPIOS</p>
             <h2>Não quero parecer ocupado. Quero construir.</h2>
-            <p className="manifesto-sub">
-              Regras simples que aplicam rigor no código, na venda e no treino.
-            </p>
+            <p className="manifesto-sub">Regras simples que guiam meu código, venda e treino.</p>
           </Reveal>
           <Stagger className="manifesto-grid">
             {principles.map((principle) => (
@@ -480,10 +476,7 @@ function App() {
         <Reveal className="section-heading">
           <p className="kicker">PROVA REAL</p>
           <h2>Onde minha vida acontece na prática.</h2>
-          <p>
-            As frentes que sustentam meu trabalho. O campo dá o contexto, o código constrói o
-            produto e o treino molda a disciplina.
-          </p>
+          <p>O campo traz o problema, o código constrói a solução e o treino molda a disciplina.</p>
         </Reveal>
 
         <Stagger className="fronts-grid">
@@ -522,12 +515,11 @@ function App() {
           <h2>Quer trocar uma ideia real?</h2>
           <p>
             Seja para falar sobre o varejo farmacêutico, conhecer o <strong>EncarteZap</strong>,
-            discutir automação com IA ou trocar experiência sobre calistenia. Me chama no e-mail ou
-            no Instagram.
+            automação ou treino pesado. Me chama no e-mail ou Instagram.
           </p>
         </Reveal>
         <Reveal className="cta-actions">
-          <a className="button primary" href={`mailto:${EMAIL}`}>
+          <a className="button primary" href={"mailto:" + EMAIL}>
             Enviar e-mail <ArrowUpRight size={18} aria-hidden="true" />
           </a>
           <a
@@ -552,7 +544,7 @@ function App() {
       {/* Footer */}
       <footer>
         <div className="footer-brand">
-          <span>© ${currentYear} João Victor · jotavictor.com</span>
+          <span>© {currentYear} João Victor · jotavictor.com</span>
           <span className="footer-tagline">
             Vendo na rua, construo no código e me forjo no treino.
           </span>
@@ -567,7 +559,7 @@ function App() {
           <a href={JOTAVFIT_URL} target="_blank" rel="noopener noreferrer">
             Instagram
           </a>
-          <a href={`mailto:${EMAIL}`}>E-mail</a>
+          <a href={"mailto:" + EMAIL}>E-mail</a>
         </nav>
       </footer>
     </main>
