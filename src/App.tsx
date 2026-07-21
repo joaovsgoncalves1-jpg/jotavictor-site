@@ -1,5 +1,6 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
-import type { CSSProperties, ReactNode } from "react"
+import type { AnimationEvent, CSSProperties, ReactNode, RefObject } from "react"
+import { useEffect, useRef, useState } from "react"
 import {
   ArrowUpRight,
   Building2,
@@ -17,30 +18,92 @@ import {
 } from "lucide-react"
 import "./App.css"
 
+/**
+ * Fires once when the element crosses into view. Two independent safety nets keep
+ * content from ever getting stuck invisible: if IntersectionObserver is unavailable
+ * we reveal immediately, and a hard timeout reveals anyway if the observer never fires.
+ */
+function useInViewOnce(active: boolean) {
+  const ref = useRef<HTMLElement | null>(null)
+  const [inView, setInView] = useState(!active)
+
+  useEffect(() => {
+    if (!active) return
+    const el = ref.current
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setInView(true)
+      return
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+    )
+    observer.observe(el)
+    // Safety net only — real reveals come from the observer. Kept long so it never
+    // competes with normal reading/scrolling pace (font/asset load alone can eat
+    // a couple seconds); it only rescues a genuinely broken observer.
+    const failsafe = window.setTimeout(() => setInView(true), 6000)
+    return () => {
+      observer.disconnect()
+      window.clearTimeout(failsafe)
+    }
+  }, [active])
+
+  return [ref, inView] as const
+}
+
 /** CSS entrance — always ends visible. Framer whileInView was leaving opacity:0 stuck. */
 function Rise({
   children,
   className,
   delay = 0,
   as = "div",
+  trigger = "mount",
 }: {
   children: ReactNode
   className?: string
   delay?: number
   as?: "div" | "article"
+  trigger?: "mount" | "inview"
 }) {
   const reduceMotion = useReducedMotion()
-  const cls = [className, !reduceMotion ? "rise-in" : null].filter(Boolean).join(" ")
-  const style = !reduceMotion ? ({ ["--rise-delay" as string]: `${delay}ms` } as CSSProperties) : undefined
+  const [ref, inView] = useInViewOnce(!reduceMotion && trigger === "inview")
+  // Once the entrance animation finishes we drop it entirely. A completed CSS animation
+  // held via fill-mode "both" otherwise pins `transform` in the cascade forever, which
+  // silently defeats plain `:hover { transform }` rules on the same element (cards).
+  const [settled, setSettled] = useState(false)
+  const animate = !reduceMotion && !settled
+  const scrollGated = animate && trigger === "inview"
+  const cls = [
+    className,
+    animate ? "rise-in" : null,
+    scrollGated ? (inView ? "is-inview" : "is-pending") : null,
+  ]
+    .filter(Boolean)
+    .join(" ")
+  const style = animate ? ({ ["--rise-delay" as string]: `${delay}ms` } as CSSProperties) : undefined
+  const onAnimationEnd = (event: AnimationEvent<Element>) => {
+    if (event.target === event.currentTarget) setSettled(true)
+  }
   if (as === "article") {
     return (
-      <article className={cls} style={style}>
+      <article
+        ref={ref as RefObject<HTMLElement>}
+        className={cls}
+        style={style}
+        onAnimationEnd={onAnimationEnd}
+      >
         {children}
       </article>
     )
   }
   return (
-    <div className={cls} style={style}>
+    <div ref={ref as RefObject<HTMLDivElement>} className={cls} style={style} onAnimationEnd={onAnimationEnd}>
       {children}
     </div>
   )
@@ -48,7 +111,7 @@ function Rise({
 
 function Reveal({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <Rise className={className} delay={0}>
+    <Rise className={className} delay={0} trigger="inview">
       {children}
     </Rise>
   )
@@ -70,7 +133,7 @@ function StaggerItem({
   delay?: number
 }) {
   return (
-    <Rise className={className} as={as} delay={delay}>
+    <Rise className={className} as={as} delay={delay} trigger="inview">
       {children}
     </Rise>
   )
@@ -309,21 +372,21 @@ function App() {
       {/* Human Intro */}
       <section className="intro-panel" id="sobre">
         <Stagger className="intro-copy">
-          <StaggerItem>
+          <StaggerItem delay={0}>
             <p className="kicker">QUEM EU SOU</p>
           </StaggerItem>
-          <StaggerItem>
+          <StaggerItem delay={90}>
             <h2 className="intro-lead">
               João. Vendo na rua, faço ferramenta, treino pesado.
             </h2>
           </StaggerItem>
-          <StaggerItem>
+          <StaggerItem delay={180}>
             <p className="intro-body">
               Moro em Natal-RN. De dia tô no varejo farmacêutico — balcão, comprador, estoque
               parado, conversa de verdade. De noite eu pego o que me irritou no campo e viro código.
             </p>
           </StaggerItem>
-          <StaggerItem>
+          <StaggerItem delay={270}>
             <p className="intro-body">
               O <strong>EncarteZap</strong> nasceu assim. A <strong>Forja</strong> também. O treino é
               o mesmo papo: sem atalho, todo dia um pouco.
