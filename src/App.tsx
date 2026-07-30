@@ -44,9 +44,6 @@ function useInViewOnce(active: boolean) {
       { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
     )
     observer.observe(el)
-    // Safety net only — real reveals come from the observer. Kept long so it never
-    // competes with normal reading/scrolling pace (font/asset load alone can eat
-    // a couple seconds); it only rescues a genuinely broken observer.
     const failsafe = window.setTimeout(() => setInView(true), 6000)
     return () => {
       observer.disconnect()
@@ -57,7 +54,7 @@ function useInViewOnce(active: boolean) {
   return [ref, inView] as const
 }
 
-/** CSS entrance — always ends visible. Framer whileInView was leaving opacity:0 stuck. */
+/** CSS entrance — always ends visible. */
 function Rise({
   children,
   className,
@@ -73,9 +70,6 @@ function Rise({
 }) {
   const reduceMotion = useReducedMotion()
   const [ref, inView] = useInViewOnce(!reduceMotion && trigger === "inview")
-  // Once the entrance animation finishes we drop it entirely. A completed CSS animation
-  // held via fill-mode "both" otherwise pins `transform` in the cascade forever, which
-  // silently defeats plain `:hover { transform }` rules on the same element (cards).
   const [settled, setSettled] = useState(false)
   const animate = !reduceMotion && !settled
   const scrollGated = animate && trigger === "inview"
@@ -150,53 +144,53 @@ const projects = [
     key: "encartezap",
     isFlagship: true,
     icon: MessageCircle,
-    eyebrow: "NO AR",
+    eyebrow: "PLATAFORMA FLAGSHIP",
     title: "EncarteZap",
-    tagline: "Oferta de farmácia direto no WhatsApp, sem agência cara.",
-    body: "Toda farmácia precisa mandar oferta rápido no zap. Fiz o EncarteZap pra isso: monta o encarte e dispara. Já tem cliente pagando e usando.",
+    tagline: "Inteligência comercial e vitrines automáticas no WhatsApp.",
+    body: "Transformo o envio manual de ofertas no varejo em uma operação automatizada de vendas no WhatsApp. Mais conversão de clientes com zero atrito.",
     link: ENCARTEZAP_URL,
-    linkLabel: "Abrir o EncarteZap",
+    linkLabel: "Conhecer o EncarteZap",
     linkAria: "Abrir o site do EncarteZap em nova aba",
-    status: "Rodando",
+    status: "Em Produção",
   },
   {
     key: "catalogo",
     isFlagship: false,
     icon: LayoutGrid,
-    eyebrow: "NO CAMPO",
+    eyebrow: "SAAS MULTI-TENANT",
     title: "Catálogo Digital",
-    tagline: "Um link com tudo que eu vendo no dia.",
-    body: "Botei produto e preço num lugar só. O cliente abre, olha e já pede — sem aquele PDF que some no meio da conversa.",
+    tagline: "Vitrines de alta conversão para gestão ágil de pedidos.",
+    body: "Substituo PDFs pesados por um catálogo digital interativo. O cliente navega, seleciona os produtos e envia o pedido direto para o setor comercial.",
     link: CATALOGO_URL,
-    linkLabel: "Abrir o catálogo",
+    linkLabel: "Ver Catálogo Opella",
     linkAria: "Abrir o Catálogo Digital em nova aba",
-    status: "Rodando",
+    status: "Em Produção",
   },
   {
     key: "forja",
     isFlagship: false,
     icon: Flame,
-    eyebrow: "PRA MIM MESMO",
-    title: "Forja",
-    tagline: "Meu placar de hábitos e metas.",
-    body: "Montei pra não depender de vontade nem de memória. Ainda tá cru, mas já abro todo dia.",
+    eyebrow: "ALTA PERFORMANCE",
+    title: "Praxis (Forja)",
+    tagline: "Sistema de gestão de rotina, disciplina e consistência.",
+    body: "Plataforma de acompanhamento de hábitos, metas e rotina operacional para garantir alta performance diária sem depender de motivação.",
     link: null,
     linkLabel: null,
     linkAria: null,
-    status: "Em obras",
+    status: "Plataforma Ativa",
   },
   {
     key: "jotavfit",
     isFlagship: false,
     icon: Dumbbell,
-    eyebrow: "NO TREINO",
+    eyebrow: "BRAND & COMUNIDADE",
     title: "Jotav.fit",
-    tagline: "Calistenia e ferro, sem personagem.",
-    body: "Posto o treino que eu faço de verdade. Sem receita mágica, sem pose de influencer.",
+    tagline: "Treino de alta intensidade, disciplina e execução diária.",
+    body: "Conteúdo e mentalidade sobre calistenia e treino pesado. Sem atalhos ou promessas mágicas: consistência real de longo prazo.",
     link: JOTAVFIT_URL,
     linkLabel: "@jotav.fit",
     linkAria: "Abrir o Instagram @jotav.fit em nova aba",
-    status: "Ativo",
+    status: "Comunidade Ativa",
   },
 ]
 
@@ -205,54 +199,54 @@ const processSteps = [
     num: "01",
     icon: Building2,
     title: "A rua manda",
-    subtitle: "Balcão, campo, estrada",
-    body: "O problema aparece no meio do expediente, não numa reunião de slide.",
+    subtitle: "Operação & Campo",
+    body: "O problema real aparece no meio do expediente, no balcão e na negociação — não em apresentações de slides.",
   },
   {
     num: "02",
     icon: Code,
     title: "Eu construo",
-    subtitle: "O mínimo que resolve",
-    body: "Faço só o que resolve e boto no ar. Coisa parada na gaveta não vale.",
+    subtitle: "Engenharia Enxuta",
+    body: "Desenvolvo software focado em resolver a causa raiz. Entrega rápida, código limpo e arquitetura escalável.",
   },
   {
     num: "03",
     icon: Hammer,
-    title: "Eu seguro",
-    subtitle: "Rotina e treino",
-    body: "Rotina chata e treino pesado. É o que mantém tudo de pé.",
+    title: "Eu mantenho",
+    subtitle: "Disciplina & Consistência",
+    body: "Rotina diária e treino de alta intensidade. A consistência no código e na vida é o que mantém tudo de pé.",
   },
 ]
 
 const principles = [
-  "Primeiro o problema, depois a tela bonita.",
-  "Coisa no ar vale mais que ideia parada.",
-  "IA pra tirar peso, não pra tirar onda.",
-  "Sem personagem, sem pose de internet.",
-  "Fazer todo dia ganha da vontade do momento.",
+  "Código só tem valor se resolve uma dor real de operação.",
+  "Software forte nasce da prática, não de teoria de slide.",
+  "Automação inteligente para multiplicar a capacidade humana de execução.",
+  "Construção com disciplina diária — no código, no varejo e no treino.",
+  "Sem personagem ou atalhos: resultados comprovados por evidências.",
 ]
 
 const realLifeFronts = [
   {
     eyebrow: "O TRABALHO",
-    title: "Farmácia todo dia",
-    body: "Sou RCA: campo, balcão, negociação de verdade. É daqui que sai quase toda ideia que vira código.",
+    title: "Varejo & Negociação",
+    body: "Atuação diária no varejo farmacêutico: campo, negociação e inteligência de mercado. É dessa vivência prática que nascem os meus softwares.",
     image: "/images/joao-work.jpg",
     alt: "João Victor no trabalho no varejo farmacêutico",
     icon: Pill,
   },
   {
     eyebrow: "A ESTRADA",
-    title: "No trânsito, entre visitas",
-    body: "Boa parte do que eu construo começa no carro, depois de ouvir o mesmo problema pela décima vez.",
+    title: "Inteligência de Campo",
+    body: "Cada deslocamento e visita a clientes revela gargalos operacionais reais que viabilizam novos produtos e automações.",
     image: "/images/joao-car.jpg",
     alt: "João Victor em deslocamento comercial",
     icon: Route,
   },
   {
     eyebrow: "O TREINO",
-    title: "Calistenia e ferro",
-    body: "Treino pesado, quase todo dia. Sem atalho — igualzinho ao resto da vida.",
+    title: "Alta Performance & Treino",
+    body: "Calistenia e treino pesado quase todo dia. A mesma disciplina necessária para levantar cargas é aplicada na criação de sistemas robustos.",
     image: "/images/joao-gym.jpg",
     alt: "João Victor treinando calistenia",
     icon: Dumbbell,
@@ -280,117 +274,38 @@ function App() {
           JV
         </a>
         <div className="nav-links">
-          <a href="#sobre">Quem sou eu</a>
-          <a href="#projetos">O que rola</a>
-          <a href="#processo">Como funciona</a>
-          <a href="#principios">No que acredito</a>
-          <a href="#campo">Meu dia</a>
-          <a href="#contato">Fala comigo</a>
+          <a href="#projetos">Projetos</a>
+          <a href="#processo">Processo</a>
+          <a href="#principios">Princípios</a>
+          <a href="#campo">Campo</a>
+          <a href="#contato" className="nav-cta">
+            Contato
+          </a>
         </div>
-        <a
-          className="nav-cta"
-          href={ENCARTEZAP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          EncarteZap <ArrowUpRight size={14} aria-hidden="true" />
-        </a>
       </nav>
 
       {/* Hero Section */}
       <section className="hero-section" id="top">
-        <div className="hero-grid">
-          <div className="hero-copy">
-            <Rise className="hero-badge" delay={0}>
-              <span className="live-dot" />
-              <span>Jota · Natal-RN</span>
-            </Rise>
-
-            <Rise delay={80}>
-              <h1>
-                <span>O aperto apareceu</span>
-                <span>na farmácia.</span>
-                <span className="accent-text">Resolvi no código.</span>
-              </h1>
-            </Rise>
-
-            <Rise className="mother-quote" delay={160}>
-              <p>
-                Vendo de dia, programo de noite, treino no meio. Mesma pessoa, três frentes.
-              </p>
-            </Rise>
-
-            <Rise delay={220}>
-              <p className="hero-sub">
-                Trabalho com farmácia aqui em Natal e fiz o <strong>EncarteZap</strong> pra facilitar
-                a vida de quem vende. Esse site é só pra você ver no que eu ando mexendo — nada de
-                currículo enfeitado.
-              </p>
-            </Rise>
-
-            <Rise className="hero-actions" delay={300}>
-              <a
-                className="button primary"
-                href={ENCARTEZAP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Conhecer o EncarteZap <ArrowUpRight size={18} aria-hidden="true" />
-              </a>
-              <a className="button ghost" href="#projetos">
-                Ver o que eu faço
-              </a>
-              <a className="button ghost" href={"mailto:" + EMAIL}>
-                Falar comigo
-              </a>
-            </Rise>
-          </div>
-
-          <motion.div className="portrait-stage" style={{ y: heroY }}>
-            <motion.div className={"portrait-card" + (reduceMotion ? "" : " rise-in")} style={{ scale: heroScale }}>
-              <img
-                src="/images/joao-hero.jpg"
-                alt="Retrato de João Victor"
-                width="720"
-                height="1280"
-                fetchPriority="high"
-              />
-              <div className="portrait-glow" />
-              <div className="portrait-status-chip">
-                <span className="pulse-dot" />
-                <span>EncarteZap no ar · Natal-RN</span>
-              </div>
-              <div className="portrait-caption">
-                <span>Farmácia</span>
-                <span>EncarteZap</span>
-                <span>Calistenia</span>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Human Intro */}
-      <section className="intro-panel" id="sobre">
-        <Stagger className="intro-copy">
+        <motion.div className="hero-backdrop" style={{ y: heroY, scale: heroScale }} aria-hidden="true" />
+        <Stagger className="hero-content">
           <StaggerItem delay={0}>
-            <p className="kicker">QUEM É O JOTA</p>
+            <p className="kicker">BUILDER • VAREJO • AUTOMAÇÃO COM IA</p>
           </StaggerItem>
           <StaggerItem delay={90}>
-            <h2 className="intro-lead">
-              Sou o João. Vendedor de rua, meio programador, treino todo dia.
-            </h2>
+            <h1 className="hero-title">
+              Construo software pra quem <span className="highlight">vende na vida real.</span>
+            </h1>
           </StaggerItem>
           <StaggerItem delay={180}>
             <p className="intro-body">
-              Moro em Natal. De dia é varejo farmacêutico — balcão, comprador, estoque encalhado,
-              muita conversa de verdade. À noite, o que me travou no trabalho vira código aqui em casa.
+              Da vivência prática no varejo à engenharia de software com inteligência artificial.
+              Crio soluções que resolvem dores reais de operação, escala e faturamento.
             </p>
           </StaggerItem>
           <StaggerItem delay={270}>
             <p className="intro-body">
-              Foi assim que saiu o <strong>EncarteZap</strong>. E a <strong>Forja</strong> também. O
-              treino segue a mesma linha: sem atalho, um pouco todo dia.
+              Fundador do <strong>EncarteZap</strong>, <strong>CatálogoZap</strong> e <strong>Praxis</strong>.
+              Transformo gargalos operacionais do dia a dia em software de alta performance.
             </p>
           </StaggerItem>
         </Stagger>
@@ -399,9 +314,9 @@ function App() {
       {/* Projects Section */}
       <section className="section" id="projetos">
         <Reveal className="section-heading">
-          <p className="kicker">O QUE EU CONSTRUO</p>
-          <h2>No ar, ou quase lá.</h2>
-          <p>Nada de enfeite pra portfólio. Se tá aqui é porque serve pra mim ou pro cliente.</p>
+          <p className="kicker">PRODUTOS & ECOSSISTEMA</p>
+          <h2>Produtos em produção. Impacto direto na operação.</h2>
+          <p>Sistemas criados para resolver problemas reais de mercado e acelerar resultados comerciais.</p>
         </Reveal>
 
         <Stagger className="projects-grid">
@@ -417,7 +332,7 @@ function App() {
                 {project.isFlagship && (
                   <div className="flagship-badge">
                     <Sparkles size={14} aria-hidden="true" />
-                    <span>Principal</span>
+                    <span>Plataforma Principal</span>
                   </div>
                 )}
                 <div className="project-card-header">
@@ -445,7 +360,7 @@ function App() {
                       <ArrowUpRight size={16} aria-hidden="true" />
                     </a>
                   ) : (
-                    <span className="internal-status">Ainda é só meu</span>
+                    <span className="internal-status">Plataforma Interna</span>
                   )}
                 </div>
               </StaggerItem>
@@ -457,9 +372,9 @@ function App() {
       {/* Process / How I Work */}
       <section className="section" id="processo">
         <Reveal className="section-heading">
-          <p className="kicker">COMO EU TOCO</p>
-          <h2>É simples assim.</h2>
-          <p>A rua mostra, eu construo, e não largo pela metade.</p>
+          <p className="kicker">METODOLOGIA DE EXECUÇÃO</p>
+          <h2>Do problema ao código em produção.</h2>
+          <p>Visão de campo, engenharia orientada à causa raiz e consistência inabalável.</p>
         </Reveal>
 
         <Stagger className="process-grid">
@@ -486,9 +401,9 @@ function App() {
       <section className="manifesto" id="principios">
         <div className="manifesto-inner">
           <Reveal>
-            <p className="kicker">NO QUE ACREDITO</p>
-            <h2>Não quero parecer ocupado. Quero entregar coisa que serve.</h2>
-            <p className="manifesto-sub">Cinco frases. Sem manual de autoajuda.</p>
+            <p className="kicker">FILOSOFIA DE TRABALHO</p>
+            <h2>Software forte nasce da prática, não de teoria em slide.</h2>
+            <p className="manifesto-sub">Diretrizes inegociáveis de engenharia e execução.</p>
           </Reveal>
           <Stagger className="manifesto-grid">
             {principles.map((principle, i) => (
@@ -504,9 +419,9 @@ function App() {
       {/* Real Life Proof Strip / Frentes */}
       <section className="section" id="campo">
         <Reveal className="section-heading">
-          <p className="kicker">LONGE DA TELA</p>
-          <h2>Onde eu passo o dia de verdade.</h2>
-          <p>Trabalho, estrada e treino. O código vem de tudo isso junto.</p>
+          <p className="kicker">VIVÊNCIA & CAMPO</p>
+          <h2>Do balcão do varejo ao código de alta performance.</h2>
+          <p>A vivência prática de mercado alimentando a criação de sistemas robustos.</p>
         </Reveal>
 
         <Stagger className="fronts-grid">
@@ -542,10 +457,9 @@ function App() {
       <section className="final-cta" id="contato">
         <Reveal className="cta-left">
           <Sparkles className="spark" size={28} aria-hidden="true" />
-          <h2>Bora trocar ideia?</h2>
+          <h2>Vamos construir algo grande?</h2>
           <p>
-            Farmácia, <strong>EncarteZap</strong>, código ou treino — se for sobre isso, tô dentro.
-            Manda um e-mail ou chama no Instagram.
+            Varejo, <strong>EncarteZap</strong>, engenharia de software ou alta performance — se o foco for resolver problemas e gerar resultados, vamos conversar.
           </p>
         </Reveal>
         <Reveal className="cta-actions">
@@ -575,7 +489,7 @@ function App() {
       <footer>
         <div className="footer-brand">
           <span>© {currentYear} João Victor · jotavictor.com</span>
-          <span className="footer-tagline">Vendo de dia. Programo de noite. Treino no meio.</span>
+          <span className="footer-tagline">Vendas no campo. Engenharia de noite. Disciplina no treino.</span>
         </div>
         <nav className="footer-links" aria-label="Links de João Victor">
           <a href={ENCARTEZAP_URL} target="_blank" rel="noopener noreferrer">
