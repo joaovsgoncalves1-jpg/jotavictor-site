@@ -1,21 +1,12 @@
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react"
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 import type { CSSProperties, ReactNode } from "react"
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
 import {
-  ArrowDown,
+  ArrowDownRight,
   ArrowUpRight,
-  BrainCircuit,
-  BriefcaseBusiness,
-  Dumbbell,
   ExternalLink,
-  GraduationCap,
-  Layers3,
+  Mail,
   MapPin,
-  MessageCircle,
-  PanelsTopLeft,
-  Sparkles,
-  Workflow,
-  Zap,
 } from "lucide-react"
 import "./App.css"
 
@@ -25,134 +16,115 @@ const CARTEIRAZAP_URL = "https://carteirazap-jotaai.vercel.app"
 const JOTAVFIT_URL = "https://www.instagram.com/jotav.fit/"
 const EMAIL = "contato@jotavictor.com"
 
-const rotatingWords = ["produto", "automação", "sistema", "ideia"]
-
 const nowItems = [
-  {
-    icon: MapPin,
-    label: "Base",
-    value: "Natal, RN",
-    note: "vivendo, estudando e construindo daqui",
-  },
-  {
-    icon: BriefcaseBusiness,
-    label: "Trabalho",
-    value: "Mercado farmacêutico",
-    note: "vendas e problemas reais todos os dias",
-  },
-  {
-    icon: GraduationCap,
-    label: "Faculdade",
-    value: "Educação Física",
-    note: "entendendo melhor o corpo que eu treino",
-  },
-  {
-    icon: BrainCircuit,
-    label: "Obcecado agora",
-    value: "Agentes + IA aplicada",
-    note: "menos conversa, mais execução",
-  },
+  ["Base", "Natal, RN"],
+  ["Trabalho", "Mercado farmacêutico"],
+  ["Faculdade", "Educação Física"],
+  ["Cabeça agora", "IA, agentes e produtos"],
 ]
 
 const projects = [
   {
-    key: "encartezap",
     number: "01",
     title: "EncarteZap",
-    status: "produto real",
-    role: "flagship",
-    color: "#efb55d",
-    icon: MessageCircle,
-    line: "Oferta boa não devia morrer dentro de PDF e lista de transmissão.",
-    body: "O EncarteZap nasceu da rotina comercial: uma forma mais simples de transformar oferta em vitrine e mandar o cliente direto pro WhatsApp.",
+    status: "no ar",
+    type: "produto",
+    accent: "#ff5a24",
+    line: "Oferta boa não devia depender de PDF feio e mensagem perdida no WhatsApp.",
+    body: "Foi daí que nasceu o EncarteZap: deixar a oferta mais fácil de ver, escolher e pedir.",
     link: ENCARTEZAP_URL,
-    linkLabel: "Abrir EncarteZap",
+    linkLabel: "encartezap.com.br",
   },
   {
-    key: "catalogozap",
     number: "02",
     title: "CatálogoZap",
-    status: "em produção",
-    role: "produto",
-    color: "#6fcf97",
-    icon: PanelsTopLeft,
-    line: "Catálogo que parece produto, não arquivo anexado.",
-    body: "Uma experiência de compra mais visual para o cliente navegar, escolher e pedir sem precisar decifrar PDF pesado.",
+    status: "no ar",
+    type: "produto",
+    accent: "#8bb76b",
+    line: "Um catálogo digital que o cliente consegue usar sem precisar de explicação.",
+    body: "É a ideia de trocar arquivo pesado por uma experiência simples de compra e pedido.",
     link: CATALOGO_URL,
-    linkLabel: "Ver Catálogo",
+    linkLabel: "ver catálogo",
   },
   {
-    key: "carteirazap",
     number: "03",
     title: "CarteiraZap",
     status: "refatorando",
-    role: "cockpit comercial",
-    color: "#5fa8ff",
-    icon: Layers3,
-    line: "140 clientes na cabeça não é gestão. É memória sendo usada como banco de dados.",
-    body: "Meu cockpit para enxergar a carteira, priorizar quem precisa de atenção e transformar dado comercial em próxima ação.",
+    type: "produto pessoal",
+    accent: "#6f90ff",
+    line: "Minha carteira de clientes ficou grande demais pra depender da minha memória.",
+    body: "Estou transformando isso num cockpit simples pra saber quem merece atenção e o que fazer depois.",
     link: CARTEIRAZAP_URL,
-    linkLabel: "Abrir CarteiraZap",
+    linkLabel: "abrir projeto",
   },
   {
-    key: "praxis",
     number: "04",
     title: "Praxis",
-    status: "uso pessoal",
-    role: "sistema de vida",
-    color: "#c69bff",
-    icon: Zap,
-    line: "Eu também precisava parar de depender da minha própria cabeça.",
-    body: "Um sistema pessoal para organizar obrigações, projetos e execução sem transformar a vida em uma planilha bonita que ninguém usa.",
+    status: "uso diário",
+    type: "sistema pessoal",
+    accent: "#d0a56f",
+    line: "Eu também precisava de um lugar que me dissesse o que fazer quando minha cabeça estivesse bagunçada.",
+    body: "O Praxis é meu jeito de tirar obrigação, projeto e rotina da cabeça e colocar em algum sistema que eu realmente use.",
     link: null,
     linkLabel: null,
   },
   {
-    key: "gofluxo",
     number: "05",
     title: "GoFluxo",
-    status: "casos reais",
-    role: "IA para empresas",
-    color: "#ff7c6b",
-    icon: Workflow,
-    line: "A parte mais interessante da IA começa quando ela encosta numa operação de verdade.",
-    body: "Automação, agentes e processos aplicados a empresas reais — saindo do prompt bonito e entrando em atendimento, financeiro, vendas e operação.",
+    status: "construindo cases",
+    type: "negócio",
+    accent: "#f28b82",
+    line: "Quero ver IA funcionando dentro de empresa de verdade, não só em demo bonita.",
+    body: "A GoFluxo é onde automação, agentes e processo começam a encostar em operações reais.",
     link: null,
     linkLabel: null,
   },
   {
-    key: "jotavfit",
     number: "06",
     title: "Jotav.fit",
     status: "em construção",
-    role: "corpo + conteúdo",
-    color: "#e9e1cd",
-    icon: Dumbbell,
-    line: "Treino é uma das poucas coisas que não aceita argumento bonito.",
-    body: "Calistenia, força e o processo de construir um físico melhor sem fingir que existe atalho.",
+    type: "conteúdo",
+    accent: "#e6dfc9",
+    line: "Treino é uma parte grande da minha vida e eu ainda quero construir algo em volta disso.",
+    body: "Calistenia, força, físico e o processo real de ficar melhor sem vender uma versão perfeita de mim.",
     link: JOTAVFIT_URL,
-    linkLabel: "Ver @jotav.fit",
+    linkLabel: "@jotav.fit",
   },
 ]
 
-const beliefs = [
-  "Problema real vale mais que ideia genial.",
-  "IA boa executa. Não só responde bonito.",
-  "Simplificar é trabalho de engenharia.",
-  "Vender me ensinou mais sobre produto do que muita tela do Figma.",
-  "O que eu construo precisa caber na vida real.",
+const directions = [
+  {
+    title: "Construir meu próprio trabalho.",
+    text: "Quero que, cada vez mais, minha renda venha de coisas que eu mesmo criei e coloquei no mundo.",
+  },
+  {
+    title: "Ficar muito bom em tecnologia útil.",
+    text: "IA e software me interessam quando resolvem coisa concreta. É nisso que eu quero aprofundar.",
+  },
+  {
+    title: "Não virar personagem de internet.",
+    text: "Quero continuar estudando, treinando, trabalhando e vivendo fora da tela enquanto construo tudo isso.",
+  },
 ]
 
-function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+function Reveal({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: ReactNode
+  className?: string
+  delay?: number
+}) {
   const reduceMotion = useReducedMotion()
 
   return (
     <motion.div
       className={className}
-      initial={reduceMotion ? false : { opacity: 0, y: 46 }}
+      initial={reduceMotion ? false : { opacity: 0, y: 32 }}
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18, margin: "0px 0px -8% 0px" }}
-      transition={{ duration: 0.72, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.16, margin: "0px 0px -7% 0px" }}
+      transition={{ duration: 0.62, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -161,300 +133,235 @@ function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; 
 
 function App() {
   const reduceMotion = useReducedMotion()
-  const { scrollYProgress } = useScroll()
-  const portraitY = useTransform(scrollYProgress, [0, 0.3], [0, reduceMotion ? 0 : 64])
-  const portraitScale = useTransform(scrollYProgress, [0, 0.3], [1, reduceMotion ? 1 : 1.055])
-  const [wordIndex, setWordIndex] = useState(0)
+  const pageRef = useRef<HTMLElement>(null)
   const heroRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll()
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  })
+  const portraitY = useTransform(heroProgress, [0, 1], [0, reduceMotion ? 0 : 90])
+  const portraitRotate = useTransform(heroProgress, [0, 1], [-1.5, reduceMotion ? -1.5 : 1.5])
   const currentYear = new Date().getFullYear()
 
-  useEffect(() => {
-    if (reduceMotion) return
-    const timer = window.setInterval(() => {
-      setWordIndex((current) => (current + 1) % rotatingWords.length)
-    }, 2200)
-    return () => window.clearInterval(timer)
-  }, [reduceMotion])
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
-    if (reduceMotion || !heroRef.current) return
-    const rect = heroRef.current.getBoundingClientRect()
-    const x = ((event.clientX - rect.left) / rect.width) * 100
-    const y = ((event.clientY - rect.top) / rect.height) * 100
-    heroRef.current.style.setProperty("--pointer-x", `${x}%`)
-    heroRef.current.style.setProperty("--pointer-y", `${y}%`)
-  }
-
   return (
-    <main className="site-shell">
-      <motion.div className="scroll-progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />
+    <main className="site" ref={pageRef}>
+      <motion.div className="progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />
 
-      <nav className="nav" aria-label="Navegação principal">
-        <a className="brand" href="#top" aria-label="Jota Victor, início">
-          JV
+      <header className="topbar">
+        <a className="wordmark" href="#top" aria-label="Jota Victor, início">
+          JOTA VICTOR
         </a>
-        <div className="nav-links">
+        <div className="topbar-meta">
+          <span><MapPin size={14} aria-hidden="true" /> Natal, RN</span>
+          <span className="topbar-date">2026</span>
+        </div>
+        <nav aria-label="Navegação principal">
           <a href="#agora">Agora</a>
           <a href="#projetos">Projetos</a>
-          <a href="#vida">Vida real</a>
-          <a className="nav-contact" href="#contato">Falar comigo</a>
-        </div>
-      </nav>
+          <a href="#rumo">Rumo</a>
+          <a href="#contato">Contato</a>
+        </nav>
+      </header>
 
-      <section className="hero" id="top" ref={heroRef} onPointerMove={handlePointerMove}>
-        <div className="hero-light" aria-hidden="true" />
-        <div className="hero-noise" aria-hidden="true" />
+      <section className="hero" id="top" ref={heroRef}>
+        <div className="chapter-mark hero-mark" aria-hidden="true">01 / INÍCIO</div>
 
-        <div className="hero-grid">
-          <div className="hero-copy">
-            <motion.p
-              className="hero-kicker"
-              initial={reduceMotion ? false : { opacity: 0, y: 22 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            >
-              JOÃO VICTOR · JOTA
-            </motion.p>
-
-            <motion.h1
-              initial={reduceMotion ? false : { opacity: 0, y: 54 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.82, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            >
-              Eu pego coisa da vida real e tento virar{" "}
-              <span className="rotating-slot" aria-live="polite">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.span
-                    key={rotatingWords[wordIndex]}
-                    className="rotating-word"
-                    initial={reduceMotion ? false : { opacity: 0, y: 28, filter: "blur(8px)" }}
-                    animate={reduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
-                    exit={reduceMotion ? undefined : { opacity: 0, y: -22, filter: "blur(6px)" }}
-                    transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    {rotatingWords[wordIndex]}.
-                  </motion.span>
-                </AnimatePresence>
-              </span>
-            </motion.h1>
-
-            <motion.p
-              className="hero-sub"
-              initial={reduceMotion ? false : { opacity: 0, y: 30 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            >
-              Trabalho com vendas, construo produtos com IA e software, estudo Educação Física e treino. O site é menos currículo e mais um retrato do que eu estou tentando construir com tudo isso.
-            </motion.p>
-
-            <motion.div
-              className="hero-actions"
-              initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.64, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <a className="button primary" href="#projetos">
-                Ver o que eu tô construindo <ArrowDown size={17} aria-hidden="true" />
-              </a>
-              <a className="text-link" href={"mailto:" + EMAIL}>
-                {EMAIL} <ArrowUpRight size={16} aria-hidden="true" />
-              </a>
-            </motion.div>
-          </div>
-
-          <motion.div
-            className="portrait-wrap"
-            initial={reduceMotion ? false : { opacity: 0, x: 52, rotate: 2 }}
-            animate={reduceMotion ? undefined : { opacity: 1, x: 0, rotate: 0 }}
-            transition={{ duration: 0.9, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-            style={{ y: portraitY, scale: portraitScale }}
+        <div className="hero-type">
+          <motion.p
+            className="hero-overline"
+            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="portrait-card">
-              <img src="/images/joao-hero.jpg" alt="João Victor" fetchPriority="high" />
-              <div className="portrait-shade" aria-hidden="true" />
-              <div className="portrait-topline">
-                <span className="live-dot" aria-hidden="true" />
-                construindo agora
-              </div>
-              <div className="portrait-tags" aria-label="Áreas de atuação">
-                <span>produtos</span>
-                <span>IA</span>
-                <span>vendas</span>
-                <span>treino</span>
-              </div>
-            </div>
-            <span className="portrait-note note-one">não é personagem.</span>
-            <span className="portrait-note note-two">é processo.</span>
-          </motion.div>
+            VENDAS · PRODUTO · IA · TREINO
+          </motion.p>
+
+          <motion.h1
+            initial={reduceMotion ? false : { opacity: 0, y: 54 }}
+            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.82, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+          >
+            Eu pego coisa da vida real
+            <span>e tento virar produto.</span>
+          </motion.h1>
         </div>
 
-        <div className="hero-bottom">
-          <span>scroll pra conhecer</span>
-          <ArrowDown size={16} aria-hidden="true" />
-        </div>
-      </section>
+        <motion.figure
+          className="hero-photo"
+          initial={reduceMotion ? false : { opacity: 0, scale: 0.94, rotate: -4 }}
+          animate={reduceMotion ? undefined : { opacity: 1, scale: 1, rotate: -1.5 }}
+          transition={{ duration: 0.9, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+          style={{ y: portraitY, rotate: portraitRotate }}
+        >
+          <img src="/images/joao-hero.jpg" alt="João Victor" fetchPriority="high" />
+          <figcaption>João Victor, 2026</figcaption>
+        </motion.figure>
 
-      <section className="ticker" aria-label="Áreas que fazem parte da vida de João Victor">
-        <div className="ticker-track">
-          <span>PRODUTOS</span><i>✦</i><span>IA</span><i>✦</i><span>VENDAS</span><i>✦</i><span>AUTOMAÇÃO</span><i>✦</i><span>CALISTENIA</span><i>✦</i><span>VIDA REAL</span><i>✦</i>
-          <span aria-hidden="true">PRODUTOS</span><i aria-hidden="true">✦</i><span aria-hidden="true">IA</span><i aria-hidden="true">✦</i><span aria-hidden="true">VENDAS</span><i aria-hidden="true">✦</i><span aria-hidden="true">AUTOMAÇÃO</span><i aria-hidden="true">✦</i><span aria-hidden="true">CALISTENIA</span><i aria-hidden="true">✦</i><span aria-hidden="true">VIDA REAL</span><i aria-hidden="true">✦</i>
-        </div>
-      </section>
-
-      <section className="section now-section" id="agora">
-        <Reveal className="section-head split-head">
-          <div>
-            <p className="eyebrow">AGORA</p>
-            <h2>Esse site tem que mudar quando minha vida mudar.</h2>
-          </div>
-          <p className="section-copy">
-            Então essa parte é simples: onde eu tô, o que ocupa minha cabeça e o que eu tô tentando fazer direito neste momento.
+        <motion.div
+          className="hero-note"
+          initial={reduceMotion ? false : { opacity: 0, y: 26 }}
+          animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p>
+            Hoje isso passa por vendas, IA, software, Educação Física e treino.
+            Não tenho tudo resolvido — esse site é um retrato do que estou construindo agora.
           </p>
-        </Reveal>
+          <a href="#projetos">
+            ver projetos <ArrowDownRight size={17} aria-hidden="true" />
+          </a>
+        </motion.div>
 
-        <div className="now-grid">
-          {nowItems.map((item, index) => {
-            const Icon = item.icon
-            return (
-              <Reveal className="now-card" key={item.label} delay={index * 0.07}>
-                <div className="now-card-top">
-                  <Icon size={19} aria-hidden="true" />
-                  <span>{item.label}</span>
-                </div>
-                <strong>{item.value}</strong>
-                <p>{item.note}</p>
-              </Reveal>
-            )
-          })}
+        <div className="hero-side-note" aria-hidden="true">em construção</div>
+      </section>
+
+      <section className="signal-strip" aria-label="Frentes que fazem parte da vida de João Victor">
+        <div className="signal-track">
+          <span>VENDO</span><i>✳</i><span>ESTUDO</span><i>✳</i><span>TREINO</span><i>✳</i><span>CONSTRUO</span><i>✳</i>
+          <span aria-hidden="true">VENDO</span><i aria-hidden="true">✳</i><span aria-hidden="true">ESTUDO</span><i aria-hidden="true">✳</i><span aria-hidden="true">TREINO</span><i aria-hidden="true">✳</i><span aria-hidden="true">CONSTRUO</span><i aria-hidden="true">✳</i>
         </div>
       </section>
 
-      <section className="projects-section" id="projetos">
-        <div className="section projects-inner">
-          <Reveal className="section-head project-heading">
-            <p className="eyebrow">O QUE EU TÔ CONSTRUINDO</p>
-            <h2>Projetos que nasceram porque alguma coisa me incomodou.</h2>
-            <p className="section-copy">Alguns já têm usuário. Outros ainda estão virando produto. Todos começaram de um problema que eu conheço de perto.</p>
+      <section className="editorial-section now" id="agora">
+        <div className="section-rail">
+          <span>02</span>
+          <p>AGORA</p>
+        </div>
+
+        <div className="section-main">
+          <Reveal className="section-intro compact-intro">
+            <h2>O que ocupa minha cabeça hoje.</h2>
+            <p>Sem bio congelada. Só o estado atual.</p>
           </Reveal>
 
-          <div className="project-list">
-            {projects.map((project, index) => {
-              const Icon = project.icon
-              return (
-                <Reveal key={project.key} delay={Math.min(index * 0.04, 0.16)}>
+          <div className="now-list">
+            {nowItems.map(([label, value], index) => (
+              <Reveal className="now-row" key={label} delay={index * 0.04}>
+                <span>{label}</span>
+                <strong>{value}</strong>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="projects" id="projetos">
+        <div className="projects-shell">
+          <div className="section-rail dark-rail">
+            <span>03</span>
+            <p>PROJETOS</p>
+          </div>
+
+          <div className="section-main">
+            <Reveal className="projects-heading">
+              <h2>Coisas que eu queria que existissem.</h2>
+              <p>Algumas já estão no ar. Outras ainda estão tomando forma.</p>
+            </Reveal>
+
+            <div className="project-stack">
+              {projects.map((project, index) => (
+                <Reveal key={project.number} delay={Math.min(index * 0.035, 0.14)}>
                   <article
                     className="project-row"
-                    style={{ "--project-color": project.color } as CSSProperties}
+                    style={{ "--accent": project.accent } as CSSProperties}
                   >
-                    <div className="project-number">{project.number}</div>
-                    <div className="project-icon"><Icon size={22} aria-hidden="true" /></div>
-                    <div className="project-main">
+                    <div className="project-index">{project.number}</div>
+                    <div className="project-title-block">
                       <div className="project-meta">
-                        <span>{project.role}</span>
-                        <span className="project-status"><i />{project.status}</span>
+                        <span>{project.type}</span>
+                        <i>•</i>
+                        <span>{project.status}</span>
                       </div>
                       <h3>{project.title}</h3>
                       <p className="project-line">{project.line}</p>
                     </div>
-                    <div className="project-side">
+                    <div className="project-detail">
                       <p>{project.body}</p>
                       {project.link ? (
                         <a href={project.link} target="_blank" rel="noopener noreferrer">
                           {project.linkLabel} <ArrowUpRight size={16} aria-hidden="true" />
                         </a>
                       ) : (
-                        <span className="no-link">por enquanto, fica aqui dentro</span>
+                        <span className="project-private">por enquanto, interno</span>
                       )}
                     </div>
                   </article>
                 </Reveal>
-              )
-            })}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section story-section">
-        <Reveal className="story-lead">
-          <p className="eyebrow">O FIO QUE LIGA TUDO</p>
-          <h2>Eu não comecei querendo “ter várias marcas”.</h2>
-          <p>
-            Comecei vendendo, treinando, testando ferramenta, ficando puto com processo ruim e tentando resolver as coisas do meu jeito. Aos poucos, uma coisa começou a alimentar a outra.
-          </p>
-        </Reveal>
-
-        <div className="story-flow" aria-label="Como as frentes de João Victor se conectam">
-          <Reveal className="story-step">
-            <span>01</span><strong>Eu vivo o problema.</strong><p>No campo, no treino, na faculdade ou tocando projeto.</p>
-          </Reveal>
-          <div className="flow-line" aria-hidden="true" />
-          <Reveal className="story-step" delay={0.08}>
-            <span>02</span><strong>Eu tento entender.</strong><p>Sem transformar tudo numa teoria complicada.</p>
-          </Reveal>
-          <div className="flow-line" aria-hidden="true" />
-          <Reveal className="story-step" delay={0.16}>
-            <span>03</span><strong>Eu construo.</strong><p>Produto, automação, conteúdo ou um sistema pra mim mesmo.</p>
-          </Reveal>
+      <section className="editorial-section life" id="vida">
+        <div className="section-rail">
+          <span>04</span>
+          <p>VIDA</p>
         </div>
-      </section>
 
-      <section className="life-section" id="vida">
-        <div className="section life-inner">
-          <Reveal className="section-head split-head">
-            <div>
-              <p className="eyebrow">VIDA FORA DA TELA</p>
-              <h2>O código é só uma parte.</h2>
-            </div>
-            <p className="section-copy">
-              O resto também entra no que eu construo: rua, cliente, treino, aula, erro, tentativa, rotina. Eu prefiro mostrar isso do que inventar uma bio perfeita.
+        <div className="section-main">
+          <Reveal className="life-copy">
+            <h2>Nem tudo acontece na tela.</h2>
+            <p>
+              Tem trabalho, aula, treino, rua, projeto que dá certo e projeto que volta pra prancheta.
+              Essa parte também explica quem eu sou.
             </p>
           </Reveal>
 
-          <div className="photo-grid">
-            <Reveal className="life-photo photo-tall">
-              <img src="/images/joao-work.jpg" alt="João Victor trabalhando" loading="lazy" />
-              <div className="photo-caption"><span>trabalho</span><p>problema real não aparece em slide</p></div>
+          <div className="photo-composition" aria-label="Momentos da rotina de João Victor">
+            <Reveal className="photo-frame frame-a">
+              <img src="/images/joao-work.jpg" alt="Momento da rotina de João Victor" loading="lazy" />
             </Reveal>
-            <Reveal className="life-photo" delay={0.08}>
-              <img src="/images/joao-car.jpg" alt="João Victor na rotina de campo" loading="lazy" />
-              <div className="photo-caption"><span>rua</span><p>boa parte das ideias começa longe do computador</p></div>
+            <Reveal className="photo-frame frame-b" delay={0.08}>
+              <img src="/images/joao-car.jpg" alt="Momento da rotina de João Victor" loading="lazy" />
             </Reveal>
-            <Reveal className="life-photo" delay={0.16}>
-              <img src="/images/joao-gym.jpg" alt="João Victor treinando" loading="lazy" />
-              <div className="photo-caption"><span>treino</span><p>o corpo não aceita feature fake</p></div>
+            <Reveal className="photo-frame frame-c" delay={0.14}>
+              <img src="/images/joao-gym.jpg" alt="Momento da rotina de João Victor" loading="lazy" />
             </Reveal>
+            <div className="photo-note" aria-hidden="true">TRABALHO / AULA / TREINO / RUA</div>
           </div>
         </div>
       </section>
 
-      <section className="section beliefs-section">
-        <Reveal className="beliefs-intro">
-          <p className="eyebrow">COMO EU PENSO</p>
-          <h2>Algumas coisas que eu tento não esquecer.</h2>
-        </Reveal>
-        <div className="belief-list">
-          {beliefs.map((belief, index) => (
-            <Reveal className="belief" key={belief} delay={index * 0.045}>
-              <span>0{index + 1}</span>
-              <p>{belief}</p>
+      <section className="direction" id="rumo">
+        <div className="direction-shell">
+          <div className="section-rail">
+            <span>05</span>
+            <p>RUMO</p>
+          </div>
+
+          <div className="section-main">
+            <Reveal className="direction-heading">
+              <p className="serif-note">Não é sobre parecer pronto.</p>
+              <h2>É sobre ficar cada vez mais perto de quem eu quero ser.</h2>
             </Reveal>
-          ))}
+
+            <div className="direction-list">
+              {directions.map((item, index) => (
+                <Reveal className="direction-row" key={item.title} delay={index * 0.06}>
+                  <span>0{index + 1}</span>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="contact-section" id="contato">
-        <div className="contact-orb" aria-hidden="true" />
+      <section className="contact" id="contato">
         <Reveal className="contact-inner">
-          <Sparkles size={26} aria-hidden="true" />
-          <p className="eyebrow">SE FEZ SENTIDO</p>
-          <h2>Me chama. A conversa pode virar alguma coisa.</h2>
-          <p>Produto, IA, vendas, automação, treino ou só uma ideia boa. Não precisa chegar com pitch pronto.</p>
-          <div className="contact-actions">
-            <a className="button primary light" href={"mailto:" + EMAIL}>
-              {EMAIL} <ArrowUpRight size={17} aria-hidden="true" />
+          <p className="contact-kicker">06 / CONTATO</p>
+          <h2>Se alguma coisa daqui bateu com o que você está construindo, me chama.</h2>
+          <div className="contact-links">
+            <a className="contact-main" href={"mailto:" + EMAIL}>
+              <Mail size={18} aria-hidden="true" /> {EMAIL}
             </a>
-            <a className="button outline-light" href={JOTAVFIT_URL} target="_blank" rel="noopener noreferrer">
-              @jotav.fit <ExternalLink size={16} aria-hidden="true" />
+            <a href={JOTAVFIT_URL} target="_blank" rel="noopener noreferrer">
+              @jotav.fit <ExternalLink size={15} aria-hidden="true" />
             </a>
           </div>
         </Reveal>
@@ -465,13 +372,7 @@ function App() {
           <strong>JOTA VICTOR</strong>
           <span>© {currentYear}</span>
         </div>
-        <p>Ainda construindo.</p>
-        <div className="footer-links">
-          <a href={ENCARTEZAP_URL} target="_blank" rel="noopener noreferrer">EncarteZap</a>
-          <a href={CATALOGO_URL} target="_blank" rel="noopener noreferrer">CatálogoZap</a>
-          <a href={CARTEIRAZAP_URL} target="_blank" rel="noopener noreferrer">CarteiraZap</a>
-          <a href={"mailto:" + EMAIL}>Email</a>
-        </div>
+        <p>jotavictor.com</p>
       </footer>
     </main>
   )

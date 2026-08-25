@@ -6,12 +6,25 @@
   "redirects": [
     {
       "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.jotavictor.com"
-        }
-      ],
+      "has": [{ "type": "host", "value": "www.jotavictor.com" }],
+      "destination": "https://jotavictor.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "jotavictor-site.vercel.app" }],
+      "destination": "https://jotavictor.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "jotavictor-site-jotaai.vercel.app" }],
+      "destination": "https://jotavictor.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "jotavictor-site-git-master-jotaai.vercel.app" }],
       "destination": "https://jotavictor.com/$1",
       "permanent": true
     }
