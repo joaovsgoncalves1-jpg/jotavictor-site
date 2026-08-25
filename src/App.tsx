@@ -1,15 +1,14 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 import type { CSSProperties, ReactNode } from "react"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import {
   ArrowDown,
   ArrowUpRight,
-  Dumbbell,
   ExternalLink,
   Mail,
+  MapPin,
   MessageCircle,
   PanelsTopLeft,
-  Route,
   Sparkles,
   Workflow,
 } from "lucide-react"
@@ -17,7 +16,9 @@ import "./App.css"
 
 const ENCARTEZAP_URL = "https://www.encartezap.com.br"
 const CATALOGO_URL = "https://catalogo-digital-opella.vercel.app/"
-const CARTEIRAZAP_URL = "https://carteirazap-jotaai.vercel.app"
+const CARTEIRAZAP_URL = "https://carteirazap-jotaai.vercel.app/landing"
+const PRAXIS_URL = "https://dopraxis.app/"
+const GOFLUXO_URL = "https://www.gofluxo.com.br/"
 const JOTAVFIT_URL = "https://www.instagram.com/jotav.fit/"
 const EMAIL = "contato@jotavictor.com"
 
@@ -25,76 +26,118 @@ const projects = [
   {
     id: "01",
     title: "EncarteZap",
-    type: "produto",
-    copy: "Nasceu de uma coisa simples: eu precisava mandar oferta pra cliente sem ficar fazendo arte e PDF toda hora.",
+    status: "produto",
+    copy: "Nasceu porque eu cansava de ver oferta boa morrer em PDF e lista de transmissão. A ideia é deixar divulgação e pedido pelo WhatsApp bem mais simples.",
     href: ENCARTEZAP_URL,
-    label: "abrir projeto",
-    accent: "#d6ff64",
+    label: "ver projeto",
   },
   {
     id: "02",
     title: "CatálogoZap",
-    type: "produto",
-    copy: "Um catálogo que o cliente consegue usar no celular e fechar o pedido direto no WhatsApp.",
+    status: "produto",
+    copy: "Uma evolução da mesma dor: um catálogo que o cliente realmente consegue usar no celular. Abre, escolhe, monta o pedido e chama no WhatsApp.",
     href: CATALOGO_URL,
-    label: "ver catálogo",
-    accent: "#77e2b8",
+    label: "ver landing",
   },
   {
     id: "03",
     title: "CarteiraZap",
-    type: "vendas",
-    copy: "Meu jeito de não depender da memória pra cuidar de uma carteira grande de clientes.",
+    status: "refatorando",
+    copy: "Eu tenho uma carteira grande demais pra depender da cabeça. O CarteiraZap é meu CRM de campo: quem comprou, quem sumiu, quem precisa de follow-up e o que eu faço hoje.",
     href: CARTEIRAZAP_URL,
-    label: "abrir projeto",
-    accent: "#7db7ff",
+    label: "ver landing",
   },
   {
     id: "04",
     title: "Praxis",
-    type: "pessoal",
-    copy: "O sistema que eu uso pra não perder tarefa, projeto e rotina dentro da própria cabeça.",
-    href: null,
-    label: null,
-    accent: "#d3b4ff",
+    status: "uso todo dia",
+    copy: "Eu fiz porque eu mesmo me perdia entre obrigação, projeto, faculdade e ideia nova. Hoje é onde eu tento transformar intenção em execução sem deixar tudo solto na cabeça.",
+    href: PRAXIS_URL,
+    label: "ver Praxis",
   },
   {
     id: "05",
     title: "GoFluxo",
-    type: "IA + automação",
-    copy: "A frente em que eu testo IA e automação dentro de empresas que têm problema de verdade.",
-    href: null,
-    label: null,
-    accent: "#ff9a6b",
+    status: "empresa",
+    copy: "É onde IA deixa de ser brincadeira de prompt e encosta em operação real. A gente usa agentes e automação pra resolver problema que empresa sente na rotina e no caixa.",
+    href: GOFLUXO_URL,
+    label: "site oficial",
   },
   {
     id: "06",
     title: "Jotav.fit",
-    type: "treino + conteúdo",
-    copy: "Calistenia, treino e a parte de mim que existe longe da tela.",
+    status: "construindo",
+    copy: "É onde eu quero juntar minha vida de treino com Educação Física e, aos poucos, transformar essa parte de mim em algo profissional também.",
     href: JOTAVFIT_URL,
     label: "ver @jotav.fit",
-    accent: "#f3f0e9",
   },
 ]
 
-const now = [
-  ["cidade", "Natal, RN"],
-  ["trabalho", "mercado farmacêutico"],
+const nowItems = [
+  ["base", "Natal, RN"],
+  ["trabalho", "vendas no mercado farmacêutico"],
   ["faculdade", "Educação Física"],
-  ["estudando", "agentes + IA aplicada"],
+  ["construindo", "CarteiraZap, Praxis e GoFluxo"],
+  ["estudando", "agentes, automação e IA aplicada"],
   ["treino", "calistenia"],
 ]
 
+function deterministic(seed: number) {
+  const x = Math.sin(seed * 999.91) * 43758.5453
+  return x - Math.floor(x)
+}
+
+function GoldField() {
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 48 }, (_, index) => ({
+        x: 2 + deterministic(index + 2) * 96,
+        y: deterministic(index + 71) * 100,
+        size: 1 + deterministic(index + 131) * 2.6,
+        delay: deterministic(index + 191) * -18,
+        duration: 12 + deterministic(index + 251) * 20,
+        drift: -18 + deterministic(index + 311) * 36,
+        opacity: 0.14 + deterministic(index + 371) * 0.48,
+      })),
+    [],
+  )
+
+  return (
+    <div className="gold-field" aria-hidden="true">
+      <div className="ambient-ring ring-one" />
+      <div className="ambient-ring ring-two" />
+      <div className="ambient-ring ring-three" />
+      {particles.map((particle, index) => (
+        <i
+          key={index}
+          className="gold-particle"
+          style={
+            {
+              "--x": `${particle.x}%`,
+              "--y": `${particle.y}%`,
+              "--size": `${particle.size}px`,
+              "--delay": `${particle.delay}s`,
+              "--duration": `${particle.duration}s`,
+              "--drift": `${particle.drift}px`,
+              "--particle-opacity": particle.opacity,
+            } as CSSProperties
+          }
+        />
+      ))}
+    </div>
+  )
+}
+
 function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
-  const reduce = useReducedMotion()
+  const reduceMotion = useReducedMotion()
+
   return (
     <motion.div
       className={className}
-      initial={reduce ? false : { opacity: 0, y: 40 }}
-      whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18, margin: "0px 0px -7% 0px" }}
-      transition={{ duration: 0.72, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={reduceMotion ? false : { opacity: 0, y: 38, filter: "blur(8px)" }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.16, margin: "0px 0px -7% 0px" }}
+      transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -103,189 +146,252 @@ function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; 
 
 function App() {
   const reduceMotion = useReducedMotion()
-  const { scrollYProgress, scrollY } = useScroll()
-  const heroScale = useTransform(scrollY, [0, 900], [1.03, reduceMotion ? 1.03 : 1.14])
-  const heroY = useTransform(scrollY, [0, 900], [0, reduceMotion ? 0 : 130])
-  const heroCopyY = useTransform(scrollY, [0, 700], [0, reduceMotion ? 0 : -55])
+  const { scrollY, scrollYProgress } = useScroll()
+  const heroScale = useTransform(scrollY, [0, 900], [1.02, reduceMotion ? 1.02 : 1.12])
+  const heroY = useTransform(scrollY, [0, 900], [0, reduceMotion ? 0 : 105])
+  const heroCopyY = useTransform(scrollY, [0, 700], [0, reduceMotion ? 0 : -42])
   const [scrolled, setScrolled] = useState(false)
+  const shellRef = useRef<HTMLElement>(null)
   const currentYear = new Date().getFullYear()
 
-  useEffect(() => {
-    return scrollY.on("change", (latest) => setScrolled(latest > 48))
-  }, [scrollY])
+  useEffect(() => scrollY.on("change", (latest) => setScrolled(latest > 52)), [scrollY])
 
-  const marquee = useMemo(() => ["VENDAS", "PRODUTO", "IA", "TREINO", "AUTOMAÇÃO", "VIDA REAL"], [])
+  const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
+    if (reduceMotion || !shellRef.current) return
+    const x = (event.clientX / window.innerWidth) * 100
+    const y = (event.clientY / window.innerHeight) * 100
+    shellRef.current.style.setProperty("--pointer-x", `${x}%`)
+    shellRef.current.style.setProperty("--pointer-y", `${y}%`)
+  }
 
   return (
-    <main className="site-shell">
+    <main className="site-shell" ref={shellRef} onPointerMove={handlePointerMove}>
+      <GoldField />
+      <div className="pointer-halo" aria-hidden="true" />
       <motion.div className="scroll-progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />
 
-      <nav className={"top-nav" + (scrolled ? " is-scrolled" : "")} aria-label="Navegação principal">
-        <a href="#top" className="brand" aria-label="Jota Victor, início">JOTA</a>
+      <nav className={`top-nav${scrolled ? " is-scrolled" : ""}`} aria-label="Navegação principal">
+        <a href="#top" className="brand" aria-label="Jota Victor, início">
+          JOTA<span>.</span>
+        </a>
         <div className="nav-links">
-          <a href="#historia">sobre</a>
+          <a href="#sobre">sobre</a>
           <a href="#projetos">projetos</a>
           <a href="#agora">agora</a>
         </div>
-        <a href={"mailto:" + EMAIL} className="nav-mail">falar comigo <ArrowUpRight size={15} /></a>
+        <a href={`mailto:${EMAIL}`} className="nav-mail">
+          falar comigo <ArrowUpRight size={15} aria-hidden="true" />
+        </a>
       </nav>
 
       <section className="hero" id="top">
-        <motion.div className="hero-media" style={{ scale: heroScale, y: heroY }} aria-hidden="true">
-          <img src="/images/joao-hero.jpg" alt="" fetchPriority="high" />
+        <motion.div className="hero-media" style={{ scale: heroScale, y: heroY }}>
+          <img src="/images/joao-hero.jpg" alt="João Victor" fetchPriority="high" />
         </motion.div>
         <div className="hero-overlay" aria-hidden="true" />
-        <div className="hero-grain" aria-hidden="true" />
+        <div className="hero-gold-wash" aria-hidden="true" />
+        <div className="hero-grid" aria-hidden="true" />
 
         <motion.div className="hero-content" style={{ y: heroCopyY }}>
           <motion.p
             className="hero-kicker"
-            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
             animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.08 }}
           >
-            João Victor · Natal, RN
+            JOÃO VICTOR · NATAL, RN
           </motion.p>
+
           <motion.h1
-            initial={reduceMotion ? false : { opacity: 0, y: 65 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 58 }}
             animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.92, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.9, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
           >
-            Eu vivo o problema.<br />
-            <span>Depois tento construir algo melhor.</span>
+            Eu trabalho com vendas,
+            <br />
+            construo com IA e <em>treino sério.</em>
           </motion.h1>
+
+          <motion.p
+            className="hero-statement"
+            initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.72, delay: 0.3 }}
+          >
+            Tô tentando descobrir até onde dá pra levar tudo isso.
+          </motion.p>
+
           <motion.p
             className="hero-sub"
-            initial={reduceMotion ? false : { opacity: 0, y: 30 }}
-            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.72, delay: 0.34 }}
-          >
-            Trabalho com vendas, construo software com IA, estudo Educação Física e treino. Esse site é onde essas coisas se encontram.
-          </motion.p>
-          <motion.div
-            className="hero-actions"
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}
             animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.68, delay: 0.46 }}
+            transition={{ duration: 0.7, delay: 0.4 }}
           >
-            <a href="#projetos" className="hero-link">ver o que eu construo <ArrowDown size={16} /></a>
-            <a href={JOTAVFIT_URL} target="_blank" rel="noreferrer" className="hero-link subtle">@jotav.fit <ExternalLink size={14} /></a>
+            Hoje minha vida é uma mistura de cliente, WhatsApp, código, agentes de IA, faculdade e treino. Algumas dessas dores viraram produto. Outras ainda tão virando.
+          </motion.p>
+
+          <motion.div
+            className="hero-actions"
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.66, delay: 0.5 }}
+          >
+            <a href="#projetos" className="gold-button">
+              ver o que eu tô construindo <ArrowDown size={16} aria-hidden="true" />
+            </a>
+            <a href={JOTAVFIT_URL} target="_blank" rel="noreferrer" className="quiet-link">
+              @jotav.fit <ExternalLink size={14} aria-hidden="true" />
+            </a>
           </motion.div>
         </motion.div>
 
-        <div className="hero-side-note">em construção · {currentYear}</div>
+        <div className="hero-side-note">EM CONSTRUÇÃO · {currentYear}</div>
       </section>
 
-      <section className="marquee" aria-hidden="true">
-        <div className="marquee-track">
-          {[...marquee, ...marquee].map((item, index) => (
-            <span key={index}>{item}<i>✦</i></span>
-          ))}
+      <section className="gold-marquee" aria-hidden="true">
+        <div className="gold-marquee-track">
+          <span>VENDAS</span><i>✦</i><span>PRODUTOS</span><i>✦</i><span>IA</span><i>✦</i><span>AUTOMAÇÃO</span><i>✦</i><span>EDUCAÇÃO FÍSICA</span><i>✦</i><span>CALISTENIA</span><i>✦</i>
+          <span>VENDAS</span><i>✦</i><span>PRODUTOS</span><i>✦</i><span>IA</span><i>✦</i><span>AUTOMAÇÃO</span><i>✦</i><span>EDUCAÇÃO FÍSICA</span><i>✦</i><span>CALISTENIA</span><i>✦</i>
         </div>
       </section>
 
-      <section className="manifesto" id="historia">
-        <Reveal className="manifesto-copy">
-          <p className="section-label">01 · SOBRE</p>
-          <h2>
-            Eu não tô tentando parecer <em>pronto.</em>
-          </h2>
-          <div className="manifesto-text">
-            <p>Ainda tô descobrindo no que tudo isso vai dar.</p>
-            <p>Só não quero uma vida em que trabalho, tecnologia e treino pareçam três pessoas diferentes. Quero ficar bom nas coisas que importam pra mim e ver até onde isso chega.</p>
-          </div>
-        </Reveal>
+      <section className="story-section" id="sobre">
+        <div className="section-shell story-grid">
+          <Reveal className="story-heading">
+            <p className="section-label">01 · COMO ISSO COMEÇOU</p>
+            <h2>Eu não comecei querendo virar dev.</h2>
+            <h2 className="gold-text">Comecei vendendo.</h2>
+          </Reveal>
+
+          <Reveal className="story-copy" delay={0.08}>
+            <p>
+              Foi na rua, cuidando de carteira, cliente, meta, pedido e follow-up, que eu comecei a ficar incomodado com processo ruim. Aí fui atrás de IA, automação e código pra resolver problema meu.
+            </p>
+            <p>
+              O resto foi crescendo. Uma ferramenta virou outra, uma ideia puxou outra e eu comecei a perceber que gosto muito mais de construir coisa que eu mesmo preciso do que de inventar projeto só pra dizer que fiz.
+            </p>
+            <blockquote>
+              “Se eu entendo o problema, eu fico com vontade de construir alguma coisa pra resolver.”
+            </blockquote>
+            <p>
+              É basicamente isso que eu busco: ficar bom de verdade em entender problema, construir solução e colocar pra funcionar no mundo real. Não só fazer demo bonita.
+            </p>
+          </Reveal>
+        </div>
       </section>
 
       <section className="fronts-section">
-        <div className="fronts-heading">
+        <div className="section-shell fronts-intro">
           <Reveal>
-            <p className="section-label light">02 · MINHAS FRENTES</p>
-            <h2>Hoje minha vida gira mais ou menos em três coisas.</h2>
+            <p className="section-label">02 · AS TRÊS FRENTES</p>
+            <h2>Hoje eu tô dividido entre três coisas. E uma acaba alimentando a outra.</h2>
           </Reveal>
         </div>
 
-        <div className="front-panel front-sales">
-          <div className="front-bg"><img src="/images/joao-work.jpg" alt="" loading="lazy" /></div>
-          <div className="front-shade" />
-          <Reveal className="front-content">
-            <span>01 / rua</span>
-            <h3>Vendas</h3>
-            <p>É meu trabalho real. Cliente, meta, rota, negociação, erro e acerto. Boa parte das ideias começa aqui.</p>
-            <Route size={26} />
-          </Reveal>
-        </div>
-
-        <div className="front-panel front-build">
-          <div className="build-ambient" aria-hidden="true" />
-          <div className="build-names" aria-hidden="true">
-            <span>EncarteZap</span><span>CarteiraZap</span><span>Praxis</span><span>GoFluxo</span><span>CatálogoZap</span>
+        <article className="front-row">
+          <div className="front-media portrait-media">
+            <motion.img
+              src="/images/joao-work.jpg"
+              alt="João Victor em um registro da rotina de trabalho"
+              loading="lazy"
+              initial={reduceMotion ? false : { scale: 1.04 }}
+              whileInView={reduceMotion ? undefined : { scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            />
           </div>
-          <Reveal className="front-content">
-            <span>02 / tela</span>
-            <h3>Construção</h3>
-            <p>Software, IA e automação. Eu gosto de pegar coisa chata da vida real e ver se dá pra transformar em sistema.</p>
-            <Workflow size={26} />
+          <Reveal className="front-copy">
+            <span className="front-number">01 / RUA</span>
+            <h3>Vendas</h3>
+            <p>
+              É meu trabalho real. Cliente, meta, rota, negociação, pedido, pós-venda. Foi aqui que eu aprendi que problema que parece pequeno no computador vira um inferno quando você repete todo dia.
+            </p>
+            <p className="front-note">Boa parte dos meus produtos nasceu daqui.</p>
           </Reveal>
-        </div>
+        </article>
 
-        <div className="front-panel front-training">
-          <div className="front-bg"><img src="/images/joao-gym.jpg" alt="" loading="lazy" /></div>
-          <div className="front-shade" />
-          <Reveal className="front-content">
-            <span>03 / corpo</span>
-            <h3>Treino</h3>
-            <p>Calistenia, força e Educação Física. É uma parte da minha vida que eu levo a sério mesmo quando ninguém tá vendo.</p>
-            <Dumbbell size={26} />
+        <article className="front-row reverse build-row">
+          <div className="build-visual" aria-hidden="true">
+            <div className="build-core"><Workflow size={32} /></div>
+            <span className="build-name name-a">CarteiraZap</span>
+            <span className="build-name name-b">Praxis</span>
+            <span className="build-name name-c">CatálogoZap</span>
+            <span className="build-name name-d">GoFluxo</span>
+            <span className="build-name name-e">EncarteZap</span>
+          </div>
+          <Reveal className="front-copy">
+            <span className="front-number">02 / TELA</span>
+            <h3>Construção</h3>
+            <p>
+              Eu não tenho formação de dev e nem quero fingir que tenho. O que eu tenho é curiosidade demais, IA na mão e pouca paciência pra processo ruim. Então eu testo, quebro, refaço e vou colocando as coisas pra funcionar.
+            </p>
+            <p className="front-note">Software é ferramenta. Resolver o problema é o ponto.</p>
           </Reveal>
-        </div>
+        </article>
+
+        <article className="front-row">
+          <div className="front-media portrait-media">
+            <motion.img
+              src="/images/joao-gym.jpg"
+              alt="João Victor em um registro de treino"
+              loading="lazy"
+              initial={reduceMotion ? false : { scale: 1.04 }}
+              whileInView={reduceMotion ? undefined : { scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            />
+          </div>
+          <Reveal className="front-copy">
+            <span className="front-number">03 / CORPO</span>
+            <h3>Treino</h3>
+            <p>
+              Calistenia sempre foi uma parte muito real da minha vida. Agora Educação Física entrou nisso também. Quero entender melhor o corpo, ficar muito bom no que eu treino e ver até onde consigo levar essa frente de forma profissional.
+            </p>
+            <p className="front-note">Aqui não tem botão de “gerar de novo”. Ou eu faço, ou não faço.</p>
+          </Reveal>
+        </article>
       </section>
 
       <section className="projects-section" id="projetos">
-        <div className="projects-head">
+        <div className="section-shell projects-head">
           <Reveal>
-            <p className="section-label light">03 · PROJETOS</p>
-            <h2>Coisas que eu fiz porque precisava delas.</h2>
-            <p>Algumas já funcionam de verdade. Outras ainda estão ficando boas.</p>
+            <p className="section-label">03 · O QUE EU TÔ CONSTRUINDO</p>
+            <h2>Algumas dores viraram produto.</h2>
+            <p>Não tá tudo pronto. Mas tudo aqui existe porque eu vi utilidade de verdade.</p>
           </Reveal>
         </div>
 
         <div className="project-list">
           {projects.map((project, index) => (
             <Reveal key={project.id} delay={Math.min(index * 0.045, 0.18)}>
-              <article className="project-row" style={{ "--accent": project.accent } as CSSProperties}>
-                <div className="project-index">{project.id}</div>
-                <div className="project-title-wrap">
-                  <span>{project.type}</span>
+              <a className="project-row" href={project.href} target="_blank" rel="noreferrer">
+                <span className="project-index">{project.id}</span>
+                <div className="project-name">
+                  <span>{project.status}</span>
                   <h3>{project.title}</h3>
                 </div>
                 <p>{project.copy}</p>
                 <div className="project-action">
-                  {project.href ? (
-                    <a href={project.href} target="_blank" rel="noreferrer" aria-label={`${project.label}: ${project.title}`}>
-                      <span>{project.label}</span><ArrowUpRight size={20} />
-                    </a>
-                  ) : (
-                    <span className="project-internal">por enquanto, interno</span>
-                  )}
+                  <span>{project.label}</span>
+                  <ArrowUpRight size={20} aria-hidden="true" />
                 </div>
-              </article>
+              </a>
             </Reveal>
           ))}
         </div>
       </section>
 
       <section className="now-section" id="agora">
-        <div className="now-grid">
+        <div className="section-shell now-grid">
           <Reveal className="now-intro">
             <p className="section-label">04 · AGORA</p>
-            <h2>O que tá ocupando minha cabeça hoje.</h2>
-            <p>Isso muda. O site deveria mudar junto.</p>
+            <h2>Sem fingir que tá tudo alinhado.</h2>
+            <p>É nisso aqui que eu tô tentando avançar hoje.</p>
           </Reveal>
 
           <div className="now-list">
-            {now.map(([label, value], index) => (
-              <Reveal className="now-row" key={label} delay={index * 0.04}>
+            {nowItems.map(([label, value], index) => (
+              <Reveal className="now-row" key={label} delay={index * 0.035}>
                 <span>{label}</span>
                 <strong>{value}</strong>
               </Reveal>
@@ -294,35 +400,46 @@ function App() {
         </div>
       </section>
 
-      <section className="photo-strip" aria-label="Recortes da vida de João Victor">
-        <motion.div className="photo-card photo-a" whileHover={reduceMotion ? undefined : { y: -8, rotate: -1 }}>
-          <img src="/images/joao-work.jpg" alt="João Victor em um registro da rotina" loading="lazy" />
-        </motion.div>
-        <motion.div className="photo-card photo-b" whileHover={reduceMotion ? undefined : { y: -8, rotate: 1 }}>
-          <img src="/images/joao-car.jpg" alt="João Victor em um registro pessoal" loading="lazy" />
-        </motion.div>
-        <motion.div className="photo-card photo-c" whileHover={reduceMotion ? undefined : { y: -8, rotate: -1 }}>
-          <img src="/images/joao-gym.jpg" alt="João Victor em um registro de treino" loading="lazy" />
-        </motion.div>
+      <section className="direction-section">
+        <div className="section-shell direction-grid">
+          <Reveal>
+            <p className="section-label">05 · PRA ONDE EU TÔ INDO</p>
+            <h2>Eu ainda não cheguei onde eu quero.</h2>
+          </Reveal>
+          <Reveal className="direction-copy" delay={0.08}>
+            <p>
+              Quero construir produtos que tenham gente usando porque resolvem alguma coisa de verdade. Quero ficar melhor em vendas, tecnologia e negócios. Quero levar meu físico e minha formação a sério. E quero conseguir olhar pra trás e ver que as coisas que eu comecei não ficaram só na ideia.
+            </p>
+            <p className="gold-line">É isso. Sem personagem pronto.</p>
+          </Reveal>
+        </div>
       </section>
 
       <section className="contact-section" id="contato">
-        <div className="contact-orb" aria-hidden="true" />
+        <div className="contact-glow" aria-hidden="true" />
         <Reveal className="contact-inner">
-          <p className="section-label light">05 · CONTATO</p>
-          <h2>Se alguma coisa daqui bateu com o que você tá construindo, fala comigo.</h2>
+          <Sparkles size={22} aria-hidden="true" />
+          <p className="section-label">06 · CONTATO</p>
+          <h2>Se tu chegou até aqui e alguma coisa fez sentido, me chama.</h2>
+          <p>Produto, vendas, IA, treino ou projeto. Não precisa chegar com pitch bonito.</p>
           <div className="contact-links">
-            <a href={"mailto:" + EMAIL}><Mail size={18} />{EMAIL}<ArrowUpRight size={18} /></a>
-            <a href={ENCARTEZAP_URL} target="_blank" rel="noreferrer"><MessageCircle size={18} />EncarteZap<ExternalLink size={17} /></a>
-            <a href={CATALOGO_URL} target="_blank" rel="noreferrer"><PanelsTopLeft size={18} />CatálogoZap<ExternalLink size={17} /></a>
+            <a href={`mailto:${EMAIL}`} className="gold-button">
+              <Mail size={17} aria-hidden="true" /> {EMAIL}
+            </a>
+            <a href={ENCARTEZAP_URL} target="_blank" rel="noreferrer" className="quiet-link">
+              <MessageCircle size={16} aria-hidden="true" /> EncarteZap
+            </a>
+            <a href={CATALOGO_URL} target="_blank" rel="noreferrer" className="quiet-link">
+              <PanelsTopLeft size={16} aria-hidden="true" /> CatálogoZap
+            </a>
           </div>
         </Reveal>
       </section>
 
       <footer>
-        <div className="footer-brand"><Sparkles size={16} /> JOTA VICTOR</div>
+        <div className="footer-brand">JOTA<span>.</span></div>
+        <div><MapPin size={14} aria-hidden="true" /> Natal, RN</div>
         <span>© {currentYear}</span>
-        <span>Natal, RN</span>
         <a href="#top">voltar ao topo ↑</a>
       </footer>
     </main>
