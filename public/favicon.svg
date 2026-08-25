@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="JV">
-  <rect width="64" height="64" fill="#ff5a24" />
-  <text x="32" y="34" text-anchor="middle" dominant-baseline="central"
+  <rect width="64" height="64" rx="14" fill="#080909" />
+  <circle cx="50" cy="14" r="6" fill="#d6ff64" />
+  <text x="31" y="34" text-anchor="middle" dominant-baseline="central"
     font-family="'Space Grotesk', 'Segoe UI', Arial, sans-serif"
-    font-size="24" font-weight="700" letter-spacing="-2" fill="#121210">JV</text>
+    font-size="23" font-weight="700" letter-spacing="-2" fill="#f4f3ee">JV</text>
 </svg>
