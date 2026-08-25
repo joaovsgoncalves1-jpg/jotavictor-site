@@ -4,13 +4,11 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import {
   ArrowDown,
   ArrowUpRight,
-  ExternalLink,
   Mail,
   MapPin,
   MessageCircle,
   PanelsTopLeft,
   Sparkles,
-  Workflow,
 } from "lucide-react"
 import "./App.css"
 
@@ -20,56 +18,69 @@ const CARTEIRAZAP_URL = "https://carteirazap-jotaai.vercel.app/landing"
 const PRAXIS_URL = "https://dopraxis.app/"
 const GOFLUXO_URL = "https://www.gofluxo.com.br/"
 const JOTAVFIT_URL = "https://www.instagram.com/jotav.fit/"
+const GITHUB_URL = "https://github.com/joaovsgoncalves1-jpg"
 const EMAIL = "contato@jotavictor.com"
 
 const projects = [
   {
     id: "01",
+    slug: "encartezap",
+    mark: "EZ",
     title: "EncarteZap",
     status: "produto",
-    copy: "Nasceu porque eu cansava de ver oferta boa morrer em PDF e lista de transmissão. A ideia é deixar divulgação e pedido pelo WhatsApp bem mais simples.",
+    copy: "Uma forma simples de criar ofertas bonitas e prontas pra mandar no WhatsApp, sem depender de designer ou ficar preso em PDF.",
     href: ENCARTEZAP_URL,
-    label: "ver projeto",
+    label: "Conhecer o EncarteZap",
   },
   {
     id: "02",
+    slug: "catalogozap",
+    mark: "CZ",
     title: "CatálogoZap",
     status: "produto",
-    copy: "Uma evolução da mesma dor: um catálogo que o cliente realmente consegue usar no celular. Abre, escolhe, monta o pedido e chama no WhatsApp.",
+    copy: "Um catálogo pensado pra funcionar bem no celular. O cliente abre, escolhe os produtos, monta o pedido e chama no WhatsApp.",
     href: CATALOGO_URL,
-    label: "ver landing",
+    label: "Conhecer o CatálogoZap",
   },
   {
     id: "03",
+    slug: "carteirazap",
+    mark: "CR",
     title: "CarteiraZap",
     status: "refatorando",
-    copy: "Eu tenho uma carteira grande demais pra depender da cabeça. O CarteiraZap é meu CRM de campo: quem comprou, quem sumiu, quem precisa de follow-up e o que eu faço hoje.",
+    copy: "Nasceu da dificuldade de cuidar de muitos clientes ao mesmo tempo. A ideia é ter tudo mais organizado e saber quem comprou, quem sumiu e quem precisa de atenção.",
     href: CARTEIRAZAP_URL,
-    label: "ver landing",
+    label: "Conhecer o CarteiraZap",
   },
   {
     id: "04",
+    slug: "praxis",
+    mark: "PX",
     title: "Praxis",
     status: "uso todo dia",
-    copy: "Eu fiz porque eu mesmo me perdia entre obrigação, projeto, faculdade e ideia nova. Hoje é onde eu tento transformar intenção em execução sem deixar tudo solto na cabeça.",
+    copy: "Começou por outro problema meu. Eu precisava de um lugar pra organizar minha vida, meus projetos e o que realmente precisava ser feito naquele momento. Hoje é uma das ferramentas que eu mais uso no dia a dia.",
     href: PRAXIS_URL,
-    label: "ver Praxis",
+    label: "Conhecer o Praxis",
   },
   {
     id: "05",
+    slug: "gofluxo",
+    mark: "GF",
     title: "GoFluxo",
     status: "empresa",
-    copy: "É onde IA deixa de ser brincadeira de prompt e encosta em operação real. A gente usa agentes e automação pra resolver problema que empresa sente na rotina e no caixa.",
+    copy: "É onde eu tô levando tecnologia e automação pra problemas de empresas. A ideia é olhar pra processos que ainda dão trabalho demais e encontrar formas melhores de fazer.",
     href: GOFLUXO_URL,
-    label: "site oficial",
+    label: "Conhecer a GoFluxo",
   },
   {
     id: "06",
+    slug: "jotavfit",
+    mark: "JF",
     title: "Jotav.fit",
     status: "construindo",
-    copy: "É onde eu quero juntar minha vida de treino com Educação Física e, aos poucos, transformar essa parte de mim em algo profissional também.",
+    copy: "É a parte fitness começando a virar algo maior. Quero juntar o que eu vivo no treino, o que tô aprendendo em Educação Física e o conteúdo que quero produzir nessa área.",
     href: JOTAVFIT_URL,
-    label: "ver @jotav.fit",
+    label: "Acompanhar o Jotav.fit",
   },
 ]
 
@@ -207,9 +218,7 @@ function App() {
             animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
           >
-            Eu trabalho com vendas,
-            <br />
-            construo com IA e <em>treino sério.</em>
+            JOTA <em>VICTOR</em>
           </motion.h1>
 
           <motion.p
@@ -218,30 +227,33 @@ function App() {
             animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.72, delay: 0.3 }}
           >
-            Tô tentando descobrir até onde dá pra levar tudo isso.
+            Vendas, tecnologia, negócios e treino. Eu mostro o que tô construindo no meio disso tudo.
           </motion.p>
 
-          <motion.p
-            className="hero-sub"
+          <motion.div
+            className="hero-follow"
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}
             animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.4 }}
           >
-            Hoje minha vida é uma mistura de cliente, WhatsApp, código, agentes de IA, faculdade e treino. Algumas dessas dores viraram produto. Outras ainda tão virando.
-          </motion.p>
-
-          <motion.div
-            className="hero-actions"
-            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.66, delay: 0.5 }}
-          >
-            <a href="#projetos" className="gold-button">
-              ver o que eu tô construindo <ArrowDown size={16} aria-hidden="true" />
-            </a>
-            <a href={JOTAVFIT_URL} target="_blank" rel="noreferrer" className="quiet-link">
-              @jotav.fit <ExternalLink size={14} aria-hidden="true" />
-            </a>
+            <p className="follow-label">ACOMPANHE O QUE EU TÔ FAZENDO</p>
+            <div className="hero-socials">
+              <a href={JOTAVFIT_URL} target="_blank" rel="noreferrer" aria-label="Jotav.fit no Instagram">
+                <b className="social-mark">IG</b>
+                <span>Jotav.fit</span>
+              </a>
+              <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label="GitHub de João Victor">
+                <b className="social-mark">GH</b>
+                <span>GitHub</span>
+              </a>
+              <a href={`mailto:${EMAIL}`} aria-label="Enviar e-mail para João Victor">
+                <Mail size={19} aria-hidden="true" />
+                <span>E-mail</span>
+              </a>
+              <a href="#projetos" className="hero-project-link">
+                meus projetos <ArrowDown size={17} aria-hidden="true" />
+              </a>
+            </div>
           </motion.div>
         </motion.div>
 
@@ -250,130 +262,88 @@ function App() {
 
       <section className="gold-marquee" aria-hidden="true">
         <div className="gold-marquee-track">
-          <span>VENDAS</span><i>✦</i><span>PRODUTOS</span><i>✦</i><span>IA</span><i>✦</i><span>AUTOMAÇÃO</span><i>✦</i><span>EDUCAÇÃO FÍSICA</span><i>✦</i><span>CALISTENIA</span><i>✦</i>
-          <span>VENDAS</span><i>✦</i><span>PRODUTOS</span><i>✦</i><span>IA</span><i>✦</i><span>AUTOMAÇÃO</span><i>✦</i><span>EDUCAÇÃO FÍSICA</span><i>✦</i><span>CALISTENIA</span><i>✦</i>
+          <span>VENDAS</span><i>✦</i><span>TECNOLOGIA</span><i>✦</i><span>NEGÓCIOS</span><i>✦</i><span>PRODUTOS</span><i>✦</i><span>EDUCAÇÃO FÍSICA</span><i>✦</i><span>CALISTENIA</span><i>✦</i>
+          <span>VENDAS</span><i>✦</i><span>TECNOLOGIA</span><i>✦</i><span>NEGÓCIOS</span><i>✦</i><span>PRODUTOS</span><i>✦</i><span>EDUCAÇÃO FÍSICA</span><i>✦</i><span>CALISTENIA</span><i>✦</i>
         </div>
       </section>
 
-      <section className="story-section" id="sobre">
+      <section className="life-section" id="sobre">
+        <div className="section-shell">
+          <Reveal className="life-intro">
+            <p className="section-label">01 · EU QUERO CONSTRUIR</p>
+            <h2>Eu não quero construir só uma carreira.</h2>
+            <div className="life-copy">
+              <p>Quero construir uma vida que faça sentido pra mim.</p>
+              <p>Trabalho, projetos, dinheiro, físico, faculdade. Tudo isso faz parte da mesma vida, e eu quero conseguir crescer em cada uma dessas áreas sem precisar abandonar as outras.</p>
+              <p>Ainda tô descobrindo como fazer isso direito. Esse site é um pouco sobre acompanhar esse processo.</p>
+            </div>
+          </Reveal>
+
+          <div className="life-grid">
+            <Reveal className="life-card life-work">
+              <span>01</span>
+              <p className="life-card-label">TRABALHO E NEGÓCIOS</p>
+              <h3>Vendas, clientes e ideias que podem virar negócio.</h3>
+              <p>É onde eu aprendo na prática sobre relacionamento, execução e o que realmente dá trabalho no dia a dia.</p>
+            </Reveal>
+
+            <Reveal className="life-card life-tech" delay={0.06}>
+              <span>02</span>
+              <p className="life-card-label">TECNOLOGIA</p>
+              <h3>Um jeito de tirar ideia da cabeça e colocar pra funcionar.</h3>
+              <p>Ferramentas, automação e tudo que me ajuda a transformar uma ideia em alguma coisa que eu consigo usar.</p>
+            </Reveal>
+
+            <Reveal className="life-card life-training" delay={0.12}>
+              <span>03</span>
+              <p className="life-card-label">TREINO E EDUCAÇÃO FÍSICA</p>
+              <h3>Uma parte da minha vida que já deixou de ser só hobby faz tempo.</h3>
+              <p>Treino há anos. Agora, estudando Educação Física, quero entender cada vez mais esse universo e descobrir até onde consigo levar isso.</p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="story-section">
         <div className="section-shell story-grid">
           <Reveal className="story-heading">
-            <p className="section-label">01 · COMO ISSO COMEÇOU</p>
-            <h2>Eu não comecei querendo virar dev.</h2>
-            <h2 className="gold-text">Comecei vendendo.</h2>
+            <p className="section-label">02 · COMO OS PROJETOS COMEÇARAM</p>
+            <h2>Tudo começou tentando facilitar meu próprio trabalho.</h2>
           </Reveal>
 
           <Reveal className="story-copy" delay={0.08}>
-            <p>
-              Foi na rua, cuidando de carteira, cliente, meta, pedido e follow-up, que eu comecei a ficar incomodado com processo ruim. Aí fui atrás de IA, automação e código pra resolver problema meu.
-            </p>
-            <p>
-              O resto foi crescendo. Uma ferramenta virou outra, uma ideia puxou outra e eu comecei a perceber que gosto muito mais de construir coisa que eu mesmo preciso do que de inventar projeto só pra dizer que fiz.
-            </p>
-            <blockquote>
-              “Se eu entendo o problema, eu fico com vontade de construir alguma coisa pra resolver.”
-            </blockquote>
-            <p>
-              É basicamente isso que eu busco: ficar bom de verdade em entender problema, construir solução e colocar pra funcionar no mundo real. Não só fazer demo bonita.
-            </p>
+            <p>Eu trabalhava com muitos clientes e percebia que gastava tempo demais tentando lembrar de tudo.</p>
+            <p className="story-rhythm">Quem eu precisava chamar. Quem tinha parado de comprar. Onde estava uma informação. O que eu tinha combinado com cada cliente.</p>
+            <p>Comecei a criar algumas coisas pra me ajudar nisso. No começo era só pra facilitar meu próprio dia.</p>
+            <p>Só que algumas ideias foram funcionando. Uma foi puxando a outra e, com o tempo, coisas que eu tinha feito só pra mim começaram a virar projetos de verdade.</p>
+            <p>Foi assim que surgiram <strong>EncarteZap, CatálogoZap, CarteiraZap</strong> e outros projetos que vieram depois.</p>
+            <p className="story-close">Quase tudo que eu crio começa assim. Eu vejo alguma coisa que podia ser mais simples e começo a pensar em como faria melhor.</p>
           </Reveal>
         </div>
-      </section>
-
-      <section className="fronts-section">
-        <div className="section-shell fronts-intro">
-          <Reveal>
-            <p className="section-label">02 · AS TRÊS FRENTES</p>
-            <h2>Hoje eu tô dividido entre três coisas. E uma acaba alimentando a outra.</h2>
-          </Reveal>
-        </div>
-
-        <article className="front-row">
-          <div className="front-media portrait-media">
-            <motion.img
-              src="/images/joao-work.jpg"
-              alt="João Victor em um registro da rotina de trabalho"
-              loading="lazy"
-              initial={reduceMotion ? false : { scale: 1.04 }}
-              whileInView={reduceMotion ? undefined : { scale: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            />
-          </div>
-          <Reveal className="front-copy">
-            <span className="front-number">01 / RUA</span>
-            <h3>Vendas</h3>
-            <p>
-              É meu trabalho real. Cliente, meta, rota, negociação, pedido, pós-venda. Foi aqui que eu aprendi que problema que parece pequeno no computador vira um inferno quando você repete todo dia.
-            </p>
-            <p className="front-note">Boa parte dos meus produtos nasceu daqui.</p>
-          </Reveal>
-        </article>
-
-        <article className="front-row reverse build-row">
-          <div className="build-visual" aria-hidden="true">
-            <div className="build-core"><Workflow size={32} /></div>
-            <span className="build-name name-a">CarteiraZap</span>
-            <span className="build-name name-b">Praxis</span>
-            <span className="build-name name-c">CatálogoZap</span>
-            <span className="build-name name-d">GoFluxo</span>
-            <span className="build-name name-e">EncarteZap</span>
-          </div>
-          <Reveal className="front-copy">
-            <span className="front-number">02 / TELA</span>
-            <h3>Construção</h3>
-            <p>
-              Eu não tenho formação de dev e nem quero fingir que tenho. O que eu tenho é curiosidade demais, IA na mão e pouca paciência pra processo ruim. Então eu testo, quebro, refaço e vou colocando as coisas pra funcionar.
-            </p>
-            <p className="front-note">Software é ferramenta. Resolver o problema é o ponto.</p>
-          </Reveal>
-        </article>
-
-        <article className="front-row">
-          <div className="front-media portrait-media">
-            <motion.img
-              src="/images/joao-gym.jpg"
-              alt="João Victor em um registro de treino"
-              loading="lazy"
-              initial={reduceMotion ? false : { scale: 1.04 }}
-              whileInView={reduceMotion ? undefined : { scale: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            />
-          </div>
-          <Reveal className="front-copy">
-            <span className="front-number">03 / CORPO</span>
-            <h3>Treino</h3>
-            <p>
-              Calistenia sempre foi uma parte muito real da minha vida. Agora Educação Física entrou nisso também. Quero entender melhor o corpo, ficar muito bom no que eu treino e ver até onde consigo levar essa frente de forma profissional.
-            </p>
-            <p className="front-note">Aqui não tem botão de “gerar de novo”. Ou eu faço, ou não faço.</p>
-          </Reveal>
-        </article>
       </section>
 
       <section className="projects-section" id="projetos">
         <div className="section-shell projects-head">
           <Reveal>
             <p className="section-label">03 · O QUE EU TÔ CONSTRUINDO</p>
-            <h2>Algumas dores viraram produto.</h2>
-            <p>Não tá tudo pronto. Mas tudo aqui existe porque eu vi utilidade de verdade.</p>
+            <h2>Algumas ideias viraram coisa de verdade.</h2>
+            <p>Tem produto rodando, coisa em refatoração e projeto que ainda tá começando. Esses são os principais hoje.</p>
           </Reveal>
         </div>
 
-        <div className="project-list">
+        <div className="project-grid">
           {projects.map((project, index) => (
-            <Reveal key={project.id} delay={Math.min(index * 0.045, 0.18)}>
-              <a className="project-row" href={project.href} target="_blank" rel="noreferrer">
-                <span className="project-index">{project.id}</span>
-                <div className="project-name">
-                  <span>{project.status}</span>
-                  <h3>{project.title}</h3>
+            <Reveal key={project.id} delay={Math.min(index * 0.045, 0.18)} className={`project-wrap project-wrap-${project.slug}`}>
+              <a className={`project-card project-${project.slug}`} href={project.href} target="_blank" rel="noreferrer">
+                <div className="project-card-top">
+                  <span className="project-index">{project.id}</span>
+                  <span className="project-status">{project.status}</span>
                 </div>
-                <p>{project.copy}</p>
-                <div className="project-action">
-                  <span>{project.label}</span>
-                  <ArrowUpRight size={20} aria-hidden="true" />
+                <div className="project-mark" aria-hidden="true">{project.mark}</div>
+                <div className="project-card-copy">
+                  <h3>{project.title}</h3>
+                  <p>{project.copy}</p>
+                  <span className="project-card-link">{project.label} <ArrowUpRight size={17} aria-hidden="true" /></span>
                 </div>
               </a>
             </Reveal>
@@ -421,10 +391,16 @@ function App() {
           <Sparkles size={22} aria-hidden="true" />
           <p className="section-label">06 · CONTATO</p>
           <h2>Se tu chegou até aqui e alguma coisa fez sentido, me chama.</h2>
-          <p>Produto, vendas, IA, treino ou projeto. Não precisa chegar com pitch bonito.</p>
+          <p>Produto, vendas, tecnologia, treino ou projeto. Não precisa chegar com pitch bonito.</p>
           <div className="contact-links">
             <a href={`mailto:${EMAIL}`} className="gold-button">
               <Mail size={17} aria-hidden="true" /> {EMAIL}
+            </a>
+            <a href={JOTAVFIT_URL} target="_blank" rel="noreferrer" className="quiet-link">
+              Jotav.fit
+            </a>
+            <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="quiet-link">
+              GitHub
             </a>
             <a href={ENCARTEZAP_URL} target="_blank" rel="noreferrer" className="quiet-link">
               <MessageCircle size={16} aria-hidden="true" /> EncarteZap
