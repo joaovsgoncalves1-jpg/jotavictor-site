@@ -1,21 +1,20 @@
-# jotavictor.com — landing pessoal
+# jotavictor.com
 
-Primeira versão da landing pessoal de João Victor.
+Site pessoal de **João Victor Gonçalves**: representante comercial no varejo farmacêutico que constrói as próprias ferramentas a partir da dor de campo.
 
-## Conceito
+**Ao vivo:** https://jotavictor.com
 
-**Frase-mãe:** Representante comercial, criador digital e construtor de sistemas para transformar rotina em resultado.
+## O que é
 
-**Função do site:** ser o hub principal de João Victor, conectando representação/farmácias, EncarteZap, Jotav.fit, Forja e IA aplicada à vida real.
+Um hub editorial de página única que conecta as frentes do João: representação comercial, o produto EncarteZap (ofertas de farmácia direto no WhatsApp), conteúdo de treino e sistemas pessoais de rotina. O tom é direto e concreto, sem buzzword.
 
 ## Stack
 
-- Vite
-- React + TypeScript
-- Motion
-- Lucide React
-- Fontsource Inter + Space Grotesk
-- CSS customizado editorial/premium
+- Vite + React 19 + TypeScript estrito
+- Motion (animações) e Lucide (ícones)
+- Fontes Inter e Space Grotesk via Fontsource
+- CSS próprio, sem Tailwind nem biblioteca de UI
+- Deploy na Vercel, com SEO técnico (JSON-LD de Person, canonical, Open Graph)
 
 ## Rodar localmente
 
@@ -24,32 +23,11 @@ npm install
 npm run dev
 ```
 
-## Build
-
 ```bash
+npm run lint
 npm run build
 ```
 
-## Deploy sugerido
+## Contato
 
-Vercel ou Netlify.
-
-Depois de publicar, apontar `jotavictor.com` no DNS para o provedor escolhido.
-
-## Para agentes de IA e colaboradores
-
-Veja `AGENTS.md` (no raiz do repositório) com:
-- Identidade do projeto e tom obrigatório
-- Regras de trabalho, verificação (lint + build)
-- Estrutura de arquivos
-- O que pode e não pode mudar sem pedido explícito
-- Fluxo recomendado para qualquer agente (Hermes, Copilot, Cursor, etc.)
-
-Este é o setup "GitHub AI" do site: instruções canônicas para qualquer agente de código trabalhar aqui de forma alinhada.
-
-## Pendências antes de ir ao ar
-
-- Trocar o e-mail `contato@jotavictor.com` se João preferir outro canal.
-- Inserir links reais: Instagram pessoal, Jotav.fit, EncarteZap e WhatsApp.
-- Opcional: criar uma sessão com vídeo/scroll-scrub mais cinematográfico se João quiser nível referência do X.
-- Opcional: fazer novas fotos horizontais/verticais com direção editorial para elevar ainda mais o visual.
+contato@jotavictor.com
